@@ -188,13 +188,13 @@ export default {
     };
   },
   mounted () {
-    this.$root.$on('habitica:external-link', url => {
-      this.url = url;
-      this.$root.$emit('bv::show::modal', 'external-link-modal');
-    });
+    // this.$root.$on('habitica:external-link', url => {
+    //   this.url = url;
+    //   this.$root.$emit('bv::show::modal', 'external-link-modal');
+    // });
   },
   beforeDestroy () {
-    this.$root.$off('habitica:external-link');
+    // this.$root.$off('habitica:external-link');
   },
   methods: {
     close () {

@@ -8,13 +8,12 @@ services:
       - server
     environment:
       - BASE_URL=http://server:3000
-      - VITE_DEV_SERVER_HOST=0.0.0.0
     networks:
       - habitica
     ports:
       - "5173:5173"
     volumes:
-      - .:/usr/src/habitica:z
+      - .:/usr/src/habitica
       - /usr/src/habitica/node_modules
       - /usr/src/habitica/website/client/node_modules
   server:
@@ -32,7 +31,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/usr/src/habitica:z
+      - .:/usr/src/habitica
       - /usr/src/habitica/node_modules
   mongo:
     image: "mongo:7.0"
@@ -44,7 +43,7 @@ services:
       - "27017:27017"
     restart: "unless-stopped"
     volumes:
-      - "./mongodb-data-docker:/data/db:z"
+      - "./mongodb-data-docker:/data/db"
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs" ]
     healthcheck:
       test: echo "try { rs.status() } catch (err) { rs.initiate() }" | mongosh --port 27017 --quiet

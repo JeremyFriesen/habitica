@@ -18,57 +18,6 @@
         :disable-name-styling="true"
         class="mr-3"
       />
-      <div
-        v-if="hasParty"
-        class="view-party d-none d-md-flex align-items-center"
-      >
-        <button
-          class="btn btn-primary"
-          @click="showPartyMembers()"
-        >
-          {{ $t('viewParty') }}
-        </button>
-      </div>
-      <div
-        v-if="hasParty"
-        ref="partyMembersDiv"
-        v-resize="1500"
-        class="party-members d-none d-md-flex "
-        @resized="setPartyMembersWidth($event)"
-      >
-        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
-        <member-details
-          v-for="(member, $index) in sortedPartyMembers"
-          v-if="member._id !== user._id && $index < membersToShow"
-          :key="member._id"
-          :member="member"
-          condensed="condensed"
-          :expanded="member._id === expandedMember"
-          :is-header="true"
-          :class-badge-position="'hidden'"
-          @onHover="expandMember(member._id)"
-        />
-        <!-- eslint-enable vue/no-use-v-if-with-v-for -->
-      </div>
-      <div
-        v-else
-        class="no-party d-none d-md-flex justify-content-center text-center mr-4"
-      >
-        <div class="align-self-center">
-          <h3>{{ user.party._id ? $t('questWithOthers') : $t('battleWithFriends') }}</h3>
-          <span
-            class="small-text"
-            v-html="user.party._id ? $t('inviteFriendsParty') : $t('startPartyDetail')"
-          ></span>
-          <br>
-          <button
-            class="btn btn-primary"
-            @click="createOrInviteParty()"
-          >
-            {{ user.party._id ? $t('findPartyMembers') : $t('getStarted') }}
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 </template>
