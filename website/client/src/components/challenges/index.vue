@@ -8,13 +8,13 @@
       >
         {{ $t('myChallenges') }}
       </router-link>
-      <router-link
+      <!-- <router-link
         class="nav-link"
         :to="{name: 'findChallenges'}"
         :class="{'active': $route.name === 'findChallenges'}"
       >
         {{ $t('findChallenges') }}
-      </router-link>
+      </router-link> -->
     </secondary-menu>
     <div class="col-12">
       <router-view />

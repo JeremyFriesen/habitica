@@ -20,7 +20,7 @@
       >
         {{ $t('customizations') }}
       </router-link>
-      <router-link
+      <!-- <router-link
         class="nav-link"
         :to="{ name: 'seasonal' }"
       >
@@ -31,7 +31,7 @@
         :to="{ name: 'time' }"
       >
         {{ $t('titleTimeTravelers') }}
-      </router-link>
+      </router-link> -->
     </secondary-menu>
     <div class="col-12">
       <router-view />

@@ -66,7 +66,7 @@
         class="topbar-dropdown-item nav-link dropdown-item dropdown-separated"
         @click.prevent="logout()"
       >{{ $t('logout') }}</a>
-      <li
+      <!-- <li
         v-if="!user.purchased.plan.customerId"
         class="topbar-dropdown-item dropdown-item dropdown-separated
           d-flex flex-column justify-content-center align-items-center dropdown-inactive subs-info"
@@ -98,7 +98,7 @@
         >
           {{ $t('learnMore') }}
         </button>
-      </li>
+      </li> -->
     </div>
   </menu-dropdown>
 </template>

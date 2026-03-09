@@ -143,18 +143,18 @@
               >
                 {{ $t('customizations') }}
               </router-link>
-              <router-link
+              <!-- <router-link
                 class="topbar-dropdown-item dropdown-item"
                 :to="{name: 'seasonal'}"
               >
                 {{ $t('titleSeasonalShop') }}
-              </router-link>
-              <router-link
+              </router-link> -->
+              <!-- <router-link
                 class="topbar-dropdown-item dropdown-item"
                 :to="{name: 'time'}"
               >
                 {{ $t('titleTimeTravelers') }}
-              </router-link>
+              </router-link> -->
             </div>
           </li>
           <!-- <b-nav-item
@@ -265,12 +265,12 @@
               >
                 {{ $t('myChallenges') }}
               </router-link>
-              <router-link
+              <!-- <router-link
                 class="topbar-dropdown-item dropdown-item"
                 :to="{name: 'findChallenges'}"
               >
                 {{ $t('findChallenges') }}
-              </router-link>
+              </router-link> -->
             </div>
           </li>
           <li

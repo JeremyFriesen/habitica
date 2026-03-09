@@ -155,7 +155,7 @@
           class="btn btn-primary mb-3"
           @click="purchaseGems()"
         >
-          {{ $t('purchaseGems') }}
+          DEMO {{ $t('purchaseGems') }}
         </button>
         <button
           v-else-if="nonSubscriberHourglasses"
@@ -180,11 +180,11 @@
         </button>
       </div>
     </div>
-    <countdown-banner
+    <!-- <countdown-banner
       v-if="item.end && item.owned == null"
       :end-date="endDate"
       class="limitedTime available"
-    />
+    /> -->
     <div
       v-if="item.key === 'rebirth_orb' && item.value > 0 && user.stats.lvl >= 100"
       class="free-rebirth d-flex align-items-center"
@@ -906,7 +906,7 @@ export default {
       }
     },
     purchaseGems () {
-      this.$root.$emit('bv::show::modal', 'buy-gems');
+      // this.$root.$emit('bv::show::modal', 'buy-gems');
     },
     async togglePinned () {
       this.isPinned = await this.$store.dispatch('user:togglePinnedItem', { type: this.item.pinType, path: this.item.path });
