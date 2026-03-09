@@ -157,7 +157,7 @@
               </router-link>
             </div>
           </li>
-          <b-nav-item
+          <!-- <b-nav-item
             v-if="user.party._id && user._id !== partyLeaderId"
             class="topbar-item"
             :class="{'active': $route.path.startsWith('/party')}"
@@ -236,7 +236,7 @@
                 {{ group.name }}
               </router-link>
             </div>
-          </li>
+          </li> -->
           <li
             class="topbar-item droppable"
             :class="{
