@@ -1,51 +1,58 @@
 services:
-  client:
+  server:
     build:
       context: .
-      dockerfile: ./Dockerfile-Dev
-    command: ["npm", "run", "client:dev:docker"]
-    depends_on:
-      - server
+      dockerfile: Dockerfile-Dev
     environment:
-      - BASE_URL=http://server:3000
-      - VITE_DEV_SERVER_HOST=0.0.0.0
+      NODE_DB_URI: mongodb://mongo/habitrpg
+      LOGGLY_CLIENT_TOKEN: ""   # disables Loggly analytics in dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      mongo:
+        condition: service_healthy
     networks:
       - habitica
+    volumes:
+      - ./server:/usr/src/habitica/server:z
+    command: ["npm", "start"]
+
+  client-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile-Dev
+    command: ["npm", "run", "client:dev:docker"]
+    environment:
+      BASE_URL: http://localhost:3000
+      VITE_DEV_SERVER_HOST: 0.0.0.0  # listen on all interfaces for LAN
+      LOGGLY_CLIENT_TOKEN: ""         # disables Loggly analytics
     ports:
       - "5173:5173"
+    depends_on:
+      - server
+    networks:
+      - habitica
     volumes:
       - .:/usr/src/habitica:z
       - /usr/src/habitica/node_modules
       - /usr/src/habitica/website/client/node_modules
-  server:
-    build:
-      context: .
-      dockerfile: ./Dockerfile-Dev
-    command: ["npm", "start"]
-    depends_on:
-      mongo:
-        condition: service_healthy
-    environment:
-      - NODE_DB_URI=mongodb://mongo/habitrpg
-    networks:
-      - habitica
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/usr/src/habitica:z
-      - /usr/src/habitica/node_modules
+
   mongo:
-    image: "mongo:7.0"
-    container_name: "habitica-mongodb"
+    image: mongo:7.0
+    container_name: habitica-mongodb
+    hostname: mongodb
     networks:
       - habitica
-    hostname: "mongodb"
     ports:
       - "27017:27017"
-    restart: "unless-stopped"
+    restart: unless-stopped
     volumes:
-      - "./mongodb-data-docker:/data/db:z"
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs" ]
+      - ./mongodb-data-docker:/data/db:z
+    entrypoint:
+      - "/usr/bin/mongod"
+      - "--bind_ip_all"
+      - "--replSet"
+      - "rs"
     healthcheck:
       test: echo "try { rs.status() } catch (err) { rs.initiate() }" | mongosh --port 27017 --quiet
       interval: 10s

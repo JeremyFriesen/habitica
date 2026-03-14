@@ -1,15 +1,32 @@
+# Use Node 20 for Habitica
 FROM node:20
 
-# Install global packages
+# Set working directory
+WORKDIR /usr/src/habitica
+
+# Install OS dependencies
+RUN apt-get update && apt-get install -y \
+    make \
+    gcc \
+    g++ \
+    python3 \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy everything first
+COPY . .
+
+# Install global tools
 RUN npm install -g gulp-cli mocha
 
-# Copy package.json and package-lock.json into image
-WORKDIR /usr/src/habitica
-COPY ["package.json", "package-lock.json", "./"]
-# Copy the remaining source files in.
-COPY . /usr/src/habitica
-# Install dependencies
-RUN npm install
-RUN npm run postinstall
-RUN npm run client:build
-RUN gulp build:prod
+# Install dependencies (will run postinstall, now gulpfile exists)
+RUN npm install --legacy-peer-deps
+
+# Copy the rest of the source code
+COPY . .
+
+# Expose server port (Habitica default)
+EXPOSE 3000
+
+# Start server
+CMD ["node", "--watch", "./website/server/index.js"]
