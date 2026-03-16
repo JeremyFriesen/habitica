@@ -20,7 +20,7 @@
       >
         <!-- Habits left side control-->
         <div
-          v-if="task.type === 'habit'"
+          v-if="task.type === 'habit' && task.up"
           class="left-control d-flex justify-content-center pt-3"
           :class="[{
             'control-bottom-box': task.group.id && !isOpenTask,
@@ -352,7 +352,7 @@
         </div>
         <!-- Habits right side control-->
         <div
-          v-if="task.type === 'habit'"
+          v-if="task.type === 'habit' && task.down"
           class="right-control d-flex justify-content-center pt-3"
           :class="[{
             'control-bottom-box': task.group.id && !isOpenTask,
