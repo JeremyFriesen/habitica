@@ -23,7 +23,9 @@ services:
       dockerfile: Dockerfile-Dev
     command: ["npm", "run", "client:dev:docker"]
     environment:
-      BASE_URL: http://localhost:3000
+      # When running in Docker, the server is a separate service, so the client needs
+      # to proxy API requests to the server container by service name.
+      BASE_URL: http://server:3000
       VITE_DEV_SERVER_HOST: 0.0.0.0  # listen on all interfaces for LAN
       LOGGLY_CLIENT_TOKEN: ""         # disables Loggly analytics
     ports:

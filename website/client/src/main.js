@@ -32,8 +32,6 @@ Vue.config.performance = !IS_PRODUCTION;
 // Disable annoying reminder abour production build in dev mode
 Vue.config.productionTip = IS_PRODUCTION;
 
-// window['habitica-i18n] is injected by the server
-Vue.use(i18n, { i18nData: window && window['habitica-i18n'] });
 Vue.use(StoreModule);
 Vue.use(ModalPlugin);
 Vue.use(DropdownPlugin);
@@ -63,15 +61,53 @@ if (import.meta.env.TIME_TRAVEL_ENABLED === 'true') {
   })();
 }
 
-const vueInstance = new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(AppComponent),
-});
+function loadI18n () {
+  if (window && window['habitica-i18n']) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector('script[src="/api/v4/i18n/core"]');
+    if (existing) {
+      const ready = existing.getAttribute('data-loaded') === 'true' || existing.readyState === 'loaded' || existing.readyState === 'complete';
+      if (ready) return resolve();
+      existing.addEventListener('load', () => resolve());
+      existing.addEventListener('error', (err) => reject(err));
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = '/api/v4/i18n/core';
+    script.async = true;
+    script.addEventListener('load', () => {
+      script.setAttribute('data-loaded', 'true');
+      resolve();
+    });
+    script.addEventListener('error', (err) => reject(err));
+    document.head.appendChild(script);
+  });
+}
+
+let vueInstance;
+
+async function initApp () {
+  await loadI18n();
+
+  // window['habitica-i18n'] is injected by the server script
+  Vue.use(i18n, { i18nData: window && window['habitica-i18n'] });
+
+  vueInstance = new Vue({
+    el: '#app',
+    router,
+    store,
+    render: h => h(AppComponent),
+  });
+
+  window.externalLink = url => {
+    vueInstance.$root.$emit('habitica:external-link', url);
+  };
+}
+
+initApp();
 
 export default vueInstance;
-
-window.externalLink = url => {
-  vueInstance.$root.$emit('habitica:external-link', url);
-};

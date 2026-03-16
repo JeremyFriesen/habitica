@@ -80,6 +80,7 @@
     padding-right: 0;
   }
 
+
   .notification {
     border-radius: 1000px;
     background-color: $green-10;

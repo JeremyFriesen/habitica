@@ -18,3 +18,12 @@ Habitica's code is licensed as described at https://github.com/HabitRPG/habitica
 **Creating a third-party tool?** Please review our [API Usage Guidelines](https://github.com/HabitRPG/habitica/wiki/API-Usage-Guidelines) to ensure that your tool is compliant and maintains the best experience for Habitica players.
 
 **Have any questions about Habitica or contributing?** See the links in the [Habitica](https://habitica.com) website's Help menu. There’s FAQ’s, guides, and the option to reach out to us with any further questions!
+
+---
+
+## Local Docker development
+
+If you’re running Habitica via `docker compose` and want to ensure frontend changes appear on **port 3000**, see:
+
+* [docs/docker-frontend-build.md](docs/docker-frontend-build.md)
+* [docs/local-dev-hot-reload.md](docs/local-dev-hot-reload.md) — how to run the prod build on **:3000** while simultaneously using hot reload on **:5173**

@@ -105,13 +105,16 @@ function _gainMP (user, val) {
 // HP modifier
 // ===== CONSTITUTION =====
 // TODO Decreases HP loss from bad habits / missed dailies by 0.5% per point.
+// TODO: Temporarily disabled HP penalties - re-enable later
+// eslint-disable-next-line no-unused-vars
 function _subtractPoints (user, task, stats, delta) {
   if (task.group.id && task.type === 'daily') return stats.hp;
   let conBonus = 1 - statsComputed(user).con / 250;
   if (conBonus < 0.1) conBonus = 0.1;
 
-  const hpMod = delta * conBonus * task.priority * 2; // constant 2 multiplier for better results
-  stats.hp += Math.round(hpMod * 10) / 10; // round to 1dp
+  // const hpMod = delta * conBonus * task.priority * 2; // constant 2 multiplier for better results
+  // Temporarily disable HP subtraction
+  // stats.hp += Math.round(hpMod * 10) / 10; // round to 1dp
   return stats.hp;
 }
 

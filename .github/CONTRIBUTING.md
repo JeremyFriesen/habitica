@@ -13,3 +13,9 @@ Habitica uses [this Google form](https://docs.google.com/forms/d/e/1FAIpQLScPhrw
 # Contributing Code
 
 See [Contributing to Habitica](https://habitica.fandom.com/wiki/Contributing_to_Habitica#Coders_.28Web_.26_Mobile.29)
+
+## Local Docker front-end builds
+
+If you are running Habitica locally via Docker and need frontend changes to appear on **http://localhost:3000**, see:
+
+* `docs/docker-frontend-build.md`
