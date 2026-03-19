@@ -92,6 +92,7 @@
   margin-left: -3px;
   margin-top: -18px;
 }
+
 .slim_armor_special_0, .broad_armor_special_0, .shield_special_0 {
   width: 90px;
   height: 90px;
@@ -99,7 +100,6 @@
 
 /* Critical */
 .weapon_special_critical {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/weapon_special_critical.gif") no-repeat;
   width: 90px;
   height: 90px;
   margin-left:-12px;
@@ -110,6 +110,7 @@
 .weapon_special_1 {
   margin-left: -12px;
 }
+
 .broad_armor_special_1, .slim_armor_special_1, .head_special_1 {
   width: 90px;
   height: 90px;
@@ -118,36 +119,15 @@
 .back_special_heroicAureole {
   width: 114px;
   height: 90px;
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/back_special_heroicAureole.gif") no-repeat;
 }
 
-.head_special_0 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Equip-ShadeHelmet.gif") no-repeat;
-}
 .head_special_1 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/ContributorOnly-Equip-CrystalHelmet.gif") no-repeat;
   margin-top: 3px;
-}
-
-.broad_armor_special_0,.slim_armor_special_0 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Equip-ShadeArmor.gif") no-repeat;
-}
-.broad_armor_special_1,.slim_armor_special_1 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/ContributorOnly-Equip-CrystalArmor.gif") no-repeat;
-}
-
-.shield_special_0 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Shield-TormentedSkull.gif") no-repeat;
-}
-
-.weapon_special_0 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Weapon-DarkSoulsBlade.gif") no-repeat;
 }
 
 .Pet-Wolf-Cerberus {
   width: 105px;
   height: 72px;
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Pet-CerberusPup.gif") no-repeat;
 }
 
 .broad_armor_special_ks2019, .slim_armor_special_ks2019, .eyewear_special_ks2019, .head_special_ks2019, .shield_special_ks2019 {
@@ -155,36 +135,17 @@
   height: 120px;
 }
 
-.broad_armor_special_ks2019, .slim_armor_special_ks2019 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Equip-MythicGryphonArmor.gif") no-repeat;
-}
-
-.eyewear_special_ks2019 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Equip-MythicGryphonVisor.gif") no-repeat;
-}
-
-.head_special_ks2019 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Equip-MythicGryphonHelm.gif") no-repeat;
-}
-
-.shield_special_ks2019 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Equip-MythicGryphonShield.gif") no-repeat;
-}
-
 .weapon_special_ks2019 {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Equip-MythicGryphonGlaive.gif") no-repeat;
   width: 120px;
   height: 120px;
 }
 
 .Pet-Gryphon-Gryphatrice {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Pet-Gryphatrice.gif") no-repeat;
   width: 81px;
   height: 99px;
 }
 
 .Pet-Gryphatrice-Jubilant {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/Pet-Gryphatrice-Jubilant.gif") no-repeat;
   width: 81px;
   height: 96px;
 }
@@ -194,37 +155,9 @@
   height: 135px;
 }
 
-.Mount_Head_Gryphon-Gryphatrice {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Mount-Head-Gryphatrice.gif") no-repeat;
-}
-
-.Mount_Body_Gryphon-Gryphatrice {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/BackerOnly-Mount-Body-Gryphatrice.gif") no-repeat;
-}
-
-.Mount_Head_Dragon-Hydra {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/Mount_Head_Dragon-Hydra.gif") no-repeat;
-}
-
-.Mount_Body_Dragon-Hydra {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/Mount_Body_Dragon-Hydra.gif") no-repeat;
-}
-
 .background_airship, .background_clocktower, .background_steamworks {
   width: 141px;
   height: 147px;
-}
-
-.background_airship {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/background_airship.gif") no-repeat;
-}
-
-.background_clocktower {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/background_clocktower.gif") no-repeat;
-}
-
-.background_steamworks {
-  background: url("https://habitica-assets.s3.amazonaws.com/mobileApp/images/background_steamworks.gif") no-repeat;
 }
 
 [class*="Mount_Head_"],
