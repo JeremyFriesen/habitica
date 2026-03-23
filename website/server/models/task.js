@@ -105,6 +105,11 @@ export const TaskSchema = new Schema({
       msg: 'Reward cost should be a positive number or 0.',
     },
   },
+  variableValue: {
+    $type: Boolean,
+    default: undefined,
+    required: false,
+  },
   priority: {
     $type: Number,
     default: 1,

@@ -460,10 +460,20 @@ export default function scoreTask (options = {}, req = {}, analytics) {
       _gainMP(user, max([multiplier, 0.01 * statsComputed(user).maxMP * multiplier]) * (direction === 'down' ? -1 : 1));
     }
   } else if (task.type === 'reward') {
+    let taskValue = task.value;
+
+    if (task.variableValue) {
+      taskValue = Number(prompt(`Nice work!! How much are you depositing to savings?`)) || 0;
+      if (taskValue < 1 || isNaN(taskValue)) {
+        console.error(`Invalid deposit amount [${taskValue}].`);
+        taskValue = 0; // Nothing deposited
+      }
+    }
+
     // Don't adjust values for rewards
     delta += _changeTaskValue(user, task, direction, times, cron);
     // purchase item
-    stats.gp -= task.value;
+    stats.gp -= taskValue;
   }
 
   req.yesterDailyScored = task.yesterDailyScored;
