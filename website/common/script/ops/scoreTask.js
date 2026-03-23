@@ -131,21 +131,47 @@ function _addPoints (user, task, stats, direction, delta) {
   // ===== PERCEPTION =====
   // TODO Increases Gold gained from tasks by .3% per point.
   const perBonus = 1 + statsComputed(user).per * 0.02;
-  const gpMod = delta * task.priority * _crit * perBonus;
+  // const gpMod = delta * task.priority * _crit * perBonus;
 
-  if (task.streak) {
-    const currStreak = direction === 'down' ? task.streak - 1 : task.streak;
-    const streakBonus = currStreak / 100 + 1; // eg, 1-day streak is 1.01, 2-day is 1.02, etc
-    const afterStreak = gpMod * streakBonus;
-    if (currStreak > 0 && gpMod > 0) {
-      // keep this on-hand for later, so we can notify streak-bonus
-      user._tmp.streakBonus = afterStreak - gpMod;
-    }
+  // if (task.streak) {
+  //   const currStreak = direction === 'down' ? task.streak - 1 : task.streak;
+  //   const streakBonus = currStreak / 100 + 1; // eg, 1-day streak is 1.01, 2-day is 1.02, etc
+  //   const afterStreak = gpMod * streakBonus;
+  //   if (currStreak > 0 && gpMod > 0) {
+  //     // keep this on-hand for later, so we can notify streak-bonus
+  //     user._tmp.streakBonus = afterStreak - gpMod;
+  //   }
 
-    stats.gp += afterStreak;
-  } else {
-    stats.gp += gpMod;
-  }
+  //   stats.gp += afterStreak;
+  // } else {
+
+    /* The game defaults to:
+     - Trivial: 0.1
+     - Easy: 0.5
+     - Medium: 1
+     - Hard: 1.5
+
+    This is a simple hack to change the amount of gp earned for each priotity to be:
+     - Trivial: 100
+     - Easy: 200
+     - Medium: 300
+     - Hard: 400
+
+     */
+
+    const gpByPriority = {
+      "0.1": 100,
+      "1": 200,
+      "1.5": 300,
+      "2": 400,
+    };
+
+    const gpMod = gpByPriority[task.priority];
+
+    // stats.gp += gpMod;
+    console.log('Priority:', task.priority, 'gpMod', gpMod);
+    stats.gp += gpMod; 
+  // }
 }
 
 function _changeTaskValue (user, task, direction, times, cron) {
