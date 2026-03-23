@@ -114,6 +114,20 @@ export const TaskSchema = new Schema({
       'Valid priority values are 0.1, 1, 1.5, 2.',
     ],
   },
+  criticalityChance: {
+    $type: new Schema({
+      dice: {
+        $type: Number,
+        required: true,
+        min: 1,
+      },
+      ranges: [{
+        min: { $type: Number, required: true },
+        max: { $type: Number, required: true },
+        modifier: { $type: Number, required: true },
+      }],
+    }, { _id: false }),
+  },  
   attribute: { $type: String, default: 'str', enum: ['str', 'con', 'int', 'per'] },
   userId: { $type: String, ref: 'User', validate: [v => validator.isUUID(v), 'Invalid uuid for task owner.'] }, // When not set it belongs to a challenge
 

@@ -145,32 +145,49 @@ function _addPoints (user, task, stats, direction, delta) {
   //   stats.gp += afterStreak;
   // } else {
 
-    /* The game defaults to:
-     - Trivial: 0.1
-     - Easy: 0.5
-     - Medium: 1
-     - Hard: 1.5
+  /* The game defaults to:
+    - Trivial: 0.1
+    - Easy: 0.5
+    - Medium: 1
+    - Hard: 1.5
 
-    This is a simple hack to change the amount of gp earned for each priotity to be:
-     - Trivial: 100
-     - Easy: 200
-     - Medium: 300
-     - Hard: 400
+  This is a simple hack to change the amount of gp earned for each priotity to be:
+    - Trivial: 100
+    - Easy: 200
+    - Medium: 300
+    - Hard: 400
 
-     */
+    */
 
-    const gpByPriority = {
-      "0.1": 100,
-      "1": 200,
-      "1.5": 300,
-      "2": 400,
-    };
+  const gpByPriority = {
+    "0.1": 100,
+    "1": 200,
+    "1.5": 300,
+    "2": 400,
+  };
 
-    const gpMod = gpByPriority[task.priority];
+  let gpBonusMod = 0;
+  let roll = 0;
+  if (task.criticalityChance) { 
+    roll = Number(prompt(`Roll a d${task.criticalityChance.dice} for your crit!`)) || 0;
+    if (roll < 1 || roll > task.criticalityChance.dice || isNaN(roll)) {
+      console.error(`Invalid roll [${roll}], no crit bonus applied.`);
+      roll = 0; // No bonus
+    }
+    const range = find(task.criticalityChance.ranges, r => roll >= r.min && roll <= r.max);
+    if (range) {
+      gpBonusMod = range.modifier;
+    }
+  }
 
-    // stats.gp += gpMod;
-    console.log('Priority:', task.priority, 'gpMod', gpMod);
-    stats.gp += gpMod; 
+  if (gpBonusMod > 0) {
+    console.log(`Critical hit, rolled a ${roll}! GP bonus modifier: +${gpBonusMod * 100}%!!`);
+  }
+
+  const gpMod = gpByPriority[task.priority] * (1 + gpBonusMod);
+
+  // stats.gp += gpMod;
+  stats.gp += gpMod; 
   // }
 }
 

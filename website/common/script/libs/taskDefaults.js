@@ -24,6 +24,7 @@ export default function taskDefaults (task, user) {
     tags: [],
     value: task.type === 'reward' ? 10 : 0,
     priority: 1,
+    criticalityChance: undefined,
     challenge: {
       shortName: 'None',
     },
