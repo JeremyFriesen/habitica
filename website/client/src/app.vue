@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="isDaxAdmin" class="is-dax-admin-banner">
+      Dax Admin Mode
+    </div>
     <div
       v-if="loading"
       id="loading-screen-inapp"
@@ -37,6 +40,25 @@
 
 <style lang='scss' scoped>
   @import '@/assets/scss/colors.scss';
+
+  .is-dax-admin-banner {
+    width: 100%;
+
+    background-color: rgba(255, 53, 89, 0.95); // deep purple with some transparency
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 13px;
+    padding: 6px 12px;
+    text-align: center;
+
+    z-index: 2000; // above navs/modals
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    line-height: 1.4;
+
+    /* optional: smooth slide-in animation */
+    transform: translateY(0);
+    transition: transform 0.25s ease-in-out;    
+  }
 
   #loading-screen-inapp {
     #melior {
@@ -109,7 +131,7 @@
 <script>
 import axios from 'axios';
 
-import { mapState } from '@/libs/store';
+import { mapState, mapGetters } from '@/libs/store';
 import snackbars from '@/components/snackbars/notifications';
 import { LOCALSTORAGE_AUTH_KEY } from '@/libs/auth';
 
@@ -136,6 +158,9 @@ export default {
   computed: {
     ...mapState(['isUserLoggedIn', 'isUserLoaded', 'notificationsRemoved']),
     ...mapState({ user: 'user.data' }),
+    ...mapGetters({
+      isDaxAdmin: 'user:isDaxAdmin',
+    }),
     isStaticPage () {
       return this.$route.meta.requiresLogin === false;
     },
@@ -325,7 +350,7 @@ export default {
 
       this.$store.dispatch('auth:logout', { redirectToLogin: true });
       return true;
-    },
+    }
   },
 };
 </script>
