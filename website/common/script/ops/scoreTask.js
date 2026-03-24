@@ -168,17 +168,17 @@ function _addPoints (user, task, stats, direction, delta) {
 
   let gpBonusMod = 0;
   let roll = 0;
-  if (task.criticalityChance) { 
-    roll = Number(prompt(`Roll a d${task.criticalityChance.dice} for your crit!`)) || 0;
-    if (roll < 1 || roll > task.criticalityChance.dice || isNaN(roll)) {
-      console.error(`Invalid roll [${roll}], no crit bonus applied.`);
-      roll = 0; // No bonus
-    }
-    const range = find(task.criticalityChance.ranges, r => roll >= r.min && roll <= r.max);
-    if (range) {
-      gpBonusMod = range.modifier;
-    }
-  }
+  // if (task.criticalityChance) { 
+  //   roll = Number(prompt(`Roll a d${task.criticalityChance.dice} for your crit!`)) || 0;
+  //   if (roll < 1 || roll > task.criticalityChance.dice || isNaN(roll)) {
+  //     console.error(`Invalid roll [${roll}], no crit bonus applied.`);
+  //     roll = 0; // No bonus
+  //   }
+  //   const range = find(task.criticalityChance.ranges, r => roll >= r.min && roll <= r.max);
+  //   if (range) {
+  //     gpBonusMod = range.modifier;
+  //   }
+  // }
 
   if (gpBonusMod > 0) {
     console.log(`Critical hit, rolled a ${roll}! GP bonus modifier: +${gpBonusMod * 100}%!!`);
@@ -462,13 +462,13 @@ export default function scoreTask (options = {}, req = {}, analytics) {
   } else if (task.type === 'reward') {
     let taskValue = task.value;
 
-    if (task.variableValue) {
-      taskValue = Number(prompt(`Nice work!! How much are you depositing to savings?`)) || 0;
-      if (taskValue < 1 || isNaN(taskValue)) {
-        console.error(`Invalid deposit amount [${taskValue}].`);
-        taskValue = 0; // Nothing deposited
-      }
-    }
+    // if (task.variableValue) {
+    //   taskValue = Number(prompt(`Nice work!! How much are you depositing to savings?`)) || 0;
+    //   if (taskValue < 1 || isNaN(taskValue)) {
+    //     console.error(`Invalid deposit amount [${taskValue}].`);
+    //     taskValue = 0; // Nothing deposited
+    //   }
+    // }
 
     // Don't adjust values for rewards
     delta += _changeTaskValue(user, task, direction, times, cron);
