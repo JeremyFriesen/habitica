@@ -19,12 +19,14 @@ docker compose up -d server mongo
 ## Volume Mounts
 
 ### server
-Live-mounts source so Node `--watch` picks up changes without a rebuild:
+Both `server` and `client-dev` mount the full repo (matching `docker-compose.example.yml`):
 ```
-./website/server  →  /usr/src/habitica/website/server
-./website/common  →  /usr/src/habitica/website/common
-./website/client/dist  →  /usr/src/habitica/website/client/dist
+.  →  /usr/src/habitica         (full repo, both containers)
+/usr/src/habitica/node_modules  (anonymous volume, protects node_modules)
 ```
+`client-dev` additionally protects `/usr/src/habitica/website/client/node_modules`.
+
+This unified single-mount approach is required for reliable hot reload. Selective subdirectory mounts (e.g. only `website/server/` and `website/common/`) break inotify event propagation and cause `node --watch` / Vite HMR to miss host file changes.
 
 ### client-dev
 Mounts the entire repo (with node_modules overrides to keep container deps):
