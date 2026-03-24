@@ -131,7 +131,7 @@ export const TaskSchema = new Schema({
         max: { $type: Number, required: true },
         modifier: { $type: Number, required: true },
       }],
-    }, { _id: false }),
+    }, { _id: false, typeKey: '$type' }),
   },  
   attribute: { $type: String, default: 'str', enum: ['str', 'con', 'int', 'per'] },
   userId: { $type: String, ref: 'User', validate: [v => validator.isUUID(v), 'Invalid uuid for task owner.'] }, // When not set it belongs to a challenge
