@@ -24,6 +24,12 @@ export default {
         this.$root.$emit('habitica:show-crit-roll-modal', task);
       });
     },
+    getSavingsAmount () {
+      return new Promise(resolve => {
+        this.$root.$once('habitica:savings-amount-submitted', amount => resolve(amount));
+        this.$root.$emit('habitica:show-savings-amount-modal', { maxAmount: Math.floor(this.user.stats.gp) });
+      });
+    },
     playTaskScoreSound (task, direction) {
       switch (task.type) { // eslint-disable-line default-case
         case 'habit':
@@ -51,8 +57,14 @@ export default {
         roll = await this.getCritRoll(task);
       }
 
+      let amount = 0;
+      if (task.variableValue) {
+        amount = await this.getSavingsAmount();
+        if (amount === null) return; // user cancelled
+      }
+
       try {
-        scoreTask({ task, user, direction }, { body: { roll } });
+        scoreTask({ task, user, direction }, { body: { roll, amount } });
       } catch (err) {
         this.text(err.message);
         return;
@@ -64,6 +76,7 @@ export default {
         taskId: task._id,
         direction,
         roll,
+        amount,
       });
 
       this.handleTaskScoreNotifications(response.data.data._tmp || {});

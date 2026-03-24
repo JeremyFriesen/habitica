@@ -5,6 +5,7 @@
   >
     <broken-task-modal />
     <crit-roll-modal />
+    <savings-amount-modal />
     <task-modal
       ref="taskModal"
       :task="editingTask || creatingTask"
@@ -431,6 +432,7 @@ import dragIcon from '@/assets/svg/drag_indicator.svg?raw';
 import { mapState, mapActions } from '@/libs/store';
 import brokenTaskModal from './brokenTaskModal';
 import critRollModal from './critRollModal';
+import savingsAmountModal from './savingsAmountModal';
 import emojiAutoComplete from '@/components/chat/emojiAutoComplete';
 import { autoCompleteHelperMixin } from '@/mixins/autoCompleteHelper';
 
@@ -442,6 +444,7 @@ export default {
     spells,
     brokenTaskModal,
     critRollModal,
+    savingsAmountModal,
     draggable,
     emojiAutoComplete,
   },

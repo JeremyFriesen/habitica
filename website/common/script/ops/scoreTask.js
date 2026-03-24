@@ -280,6 +280,7 @@ export default function scoreTask (options = {}, req = {}, analytics) {
     user, task, direction, times = 1, cron = false,
   } = options;
   const roll = (req && req.body && req.body.roll) ? Number(req.body.roll) : 0;
+  const amount = (req && req.body && req.body.amount) ? Number(req.body.amount) : 0;
   let delta = 0;
   const stats = {
     gp: user.stats.gp,
@@ -305,7 +306,8 @@ export default function scoreTask (options = {}, req = {}, analytics) {
     throw new BadRequest('Cannot score task belonging to another user.');
   }
   // If they're trying to purchase a too-expensive reward, don't allow them to do that.
-  if (task.value > user.stats.gp && task.type === 'reward') throw new NotAuthorized(i18n.t('messageNotEnoughGold', req.language));
+  const effectiveCost = (task.type === 'reward' && task.variableValue) ? amount : task.value;
+  if (effectiveCost > user.stats.gp && task.type === 'reward') throw new NotAuthorized(i18n.t('messageNotEnoughGold', req.language));
 
   if (task.type === 'habit') {
     delta += _changeTaskValue(user, task, direction, times, cron);
@@ -467,13 +469,9 @@ export default function scoreTask (options = {}, req = {}, analytics) {
   } else if (task.type === 'reward') {
     let taskValue = task.value;
 
-    // if (task.variableValue) {
-    //   taskValue = Number(prompt(`Nice work!! How much are you depositing to savings?`)) || 0;
-    //   if (taskValue < 1 || isNaN(taskValue)) {
-    //     console.error(`Invalid deposit amount [${taskValue}].`);
-    //     taskValue = 0; // Nothing deposited
-    //   }
-    // }
+    if (task.variableValue) {
+      taskValue = amount >= 1 ? amount : 0;
+    }
 
     // Don't adjust values for rewards
     delta += _changeTaskValue(user, task, direction, times, cron);

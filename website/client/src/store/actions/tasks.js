@@ -144,8 +144,8 @@ export async function save (store, editedTask) {
   if (originalTask) Object.assign(originalTask, response.data.data);
 }
 
-export async function score (store, { taskId, direction, roll = 0 }) {
-  const res = await axios.post(`/api/v4/tasks/${taskId}/score/${direction}`, { roll });
+export async function score (store, { taskId, direction, roll = 0, amount = 0 }) {
+  const res = await axios.post(`/api/v4/tasks/${taskId}/score/${direction}`, { roll, amount });
   return res;
 }
 
