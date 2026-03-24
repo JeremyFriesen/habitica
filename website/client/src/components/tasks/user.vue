@@ -4,6 +4,7 @@
     @click="openCreateBtn ? openCreateBtn = false : null"
   >
     <broken-task-modal />
+    <crit-roll-modal />
     <task-modal
       ref="taskModal"
       :task="editingTask || creatingTask"
@@ -429,6 +430,7 @@ import dragIcon from '@/assets/svg/drag_indicator.svg?raw';
 
 import { mapState, mapActions } from '@/libs/store';
 import brokenTaskModal from './brokenTaskModal';
+import critRollModal from './critRollModal';
 import emojiAutoComplete from '@/components/chat/emojiAutoComplete';
 import { autoCompleteHelperMixin } from '@/mixins/autoCompleteHelper';
 
@@ -439,6 +441,7 @@ export default {
     TaskSummary,
     spells,
     brokenTaskModal,
+    critRollModal,
     draggable,
     emojiAutoComplete,
   },
