@@ -186,9 +186,7 @@ function _addPoints (user, task, stats, direction, delta) {
 
   const gpMod = gpByPriority[task.priority] * (1 + gpBonusMod);
 
-  // stats.gp += gpMod;
-  stats.gp += gpMod; 
-  // }
+  stats.gp += direction === 'down' ? -gpMod : gpMod;
 }
 
 function _changeTaskValue (user, task, direction, times, cron) {
