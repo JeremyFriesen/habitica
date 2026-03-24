@@ -18,6 +18,12 @@ export default {
     async beforeTaskScore () {
       return (!this.castingSpell);
     },
+    getCritRoll (task) {
+      return new Promise(resolve => {
+        this.$root.$once('habitica:crit-roll-submitted', roll => resolve(roll));
+        this.$root.$emit('habitica:show-crit-roll-modal', task);
+      });
+    },
     playTaskScoreSound (task, direction) {
       switch (task.type) { // eslint-disable-line default-case
         case 'habit':
@@ -40,8 +46,13 @@ export default {
       const canScoreTask = await this.beforeTaskScore(task);
       if (!canScoreTask) return;
 
+      let roll = 0;
+      if (task.criticalityChance && direction === 'up') {
+        roll = await this.getCritRoll(task);
+      }
+
       try {
-        scoreTask({ task, user, direction });
+        scoreTask({ task, user, direction }, { body: { roll } });
       } catch (err) {
         this.text(err.message);
         return;
@@ -52,6 +63,7 @@ export default {
       const response = await this.$store.dispatch('tasks:score', {
         taskId: task._id,
         direction,
+        roll,
       });
 
       this.handleTaskScoreNotifications(response.data.data._tmp || {});

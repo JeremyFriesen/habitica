@@ -408,7 +408,7 @@
             v-html="icons.gold"
           ></div>
           <div class="small-text">
-            {{ task.value }}
+            {{ task.variableValue ? '?' : task.value }}
           </div>
         </div>
       </div>

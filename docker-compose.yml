@@ -14,7 +14,9 @@ services:
     networks:
       - habitica
     volumes:
-      - ./server:/usr/src/habitica/server:z
+      - ./website/server:/usr/src/habitica/website/server:z
+      - ./website/common:/usr/src/habitica/website/common:z
+      - ./website/client/dist:/usr/src/habitica/website/client/dist:z
     command: ["npm", "start"]
 
   client-dev:
