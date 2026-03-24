@@ -23,6 +23,7 @@ Live-mounts source so Node `--watch` picks up changes without a rebuild:
 ```
 ./website/server  →  /usr/src/habitica/website/server
 ./website/common  →  /usr/src/habitica/website/common
+./website/client/dist  →  /usr/src/habitica/website/client/dist
 ```
 
 ### client-dev
@@ -31,7 +32,7 @@ Mounts the entire repo (with node_modules overrides to keep container deps):
 ./  →  /usr/src/habitica
 ```
 
-> Only `website/server/` and `website/common/` are live for the server container. Changes to `package.json`, `website/client/`, or the Dockerfile require a full rebuild.
+> `website/client/dist/` is live-mounted so production builds propagate to `:3000` immediately without a container restart.
 
 ## Rebuild Commands
 
@@ -40,7 +41,8 @@ Mounts the entire repo (with node_modules overrides to keep container deps):
 docker compose build server && docker compose up -d server
 
 # Build production client bundle (served on :3000)
-docker compose exec server sh -c "cd website/client && npm run build"
+# Must run on the host (or in client-dev) — the server container has stale baked-in source
+cd website/client && npm run build
 ```
 
 ## History: Why the Volume Mounts Were Fixed
