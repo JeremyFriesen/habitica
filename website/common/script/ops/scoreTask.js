@@ -118,7 +118,7 @@ function _subtractPoints (user, task, stats, delta) {
   return stats.hp;
 }
 
-function _addPoints (user, task, stats, direction, delta) {
+function _addPoints (user, task, stats, direction, delta, roll = 0) {
   const _crit = user._tmp.crit || 1;
 
   // Exp Modifier
@@ -167,21 +167,27 @@ function _addPoints (user, task, stats, direction, delta) {
   };
 
   let gpBonusMod = 0;
-  let roll = 0;
-  // if (task.criticalityChance) { 
-  //   roll = Number(prompt(`Roll a d${task.criticalityChance.dice} for your crit!`)) || 0;
-  //   if (roll < 1 || roll > task.criticalityChance.dice || isNaN(roll)) {
-  //     console.error(`Invalid roll [${roll}], no crit bonus applied.`);
-  //     roll = 0; // No bonus
-  //   }
-  //   const range = find(task.criticalityChance.ranges, r => roll >= r.min && roll <= r.max);
-  //   if (range) {
-  //     gpBonusMod = range.modifier;
-  //   }
-  // }
 
-  if (gpBonusMod > 0) {
-    console.log(`Critical hit, rolled a ${roll}! GP bonus modifier: +${gpBonusMod * 100}%!!`);
+  if (task.criticalityChance) {
+    // When checking (up): use the provided roll value; store it on the task for reversal.
+    // When unchecking (down): retrieve the stored roll to apply the same modifier in reverse.
+    const effectiveRoll = direction === 'up' ? roll : (task.critRoll || 0);
+
+    if (effectiveRoll >= 1 && effectiveRoll <= task.criticalityChance.dice) {
+      const range = find(task.criticalityChance.ranges, r => effectiveRoll >= r.min && effectiveRoll <= r.max);
+      if (range) {
+        gpBonusMod = range.modifier;
+      }
+    }
+
+    if (direction === 'up') {
+      task.critRoll = effectiveRoll; // persist for reversal
+      if (gpBonusMod > 0) {
+        console.log(`Critical hit, rolled a ${effectiveRoll}! GP bonus modifier: +${gpBonusMod * 100}%!!`);
+      }
+    } else {
+      task.critRoll = 0; // clear after reversal
+    }
   }
 
   const gpMod = gpByPriority[task.priority] * (1 + gpBonusMod);
@@ -273,6 +279,7 @@ export default function scoreTask (options = {}, req = {}, analytics) {
   const {
     user, task, direction, times = 1, cron = false,
   } = options;
+  const roll = (req && req.body && req.body.roll) ? Number(req.body.roll) : 0;
   let delta = 0;
   const stats = {
     gp: user.stats.gp,
@@ -305,7 +312,7 @@ export default function scoreTask (options = {}, req = {}, analytics) {
 
     // Add habit value to habit-history (if different)
     if (delta > 0) {
-      _addPoints(user, task, stats, direction, delta);
+      _addPoints(user, task, stats, direction, delta, roll);
     } else {
       _subtractPoints(user, task, stats, delta);
     }
@@ -341,7 +348,7 @@ export default function scoreTask (options = {}, req = {}, analytics) {
       delta += _changeTaskValue(user, task, direction, times, cron);
       if (direction === 'down') delta = _calculateDelta(task, direction, cron); // recalculate delta for unchecking so the gp and exp come out correctly
       // obviously for delta>0, but also a trick to undo accidental checkboxes
-      _addPoints(user, task, stats, direction, delta);
+      _addPoints(user, task, stats, direction, delta, roll);
       _gainMP(user, max([1, 0.01 * statsComputed(user).maxMP]) * (direction === 'down' ? -1 : 1));
 
       if (direction === 'up') {
@@ -451,7 +458,7 @@ export default function scoreTask (options = {}, req = {}, analytics) {
 
       delta += _changeTaskValue(user, task, direction, times, cron);
       if (direction === 'down') delta = _calculateDelta(task, direction, cron); // recalculate delta for unchecking so the gp and exp come out correctly
-      _addPoints(user, task, stats, direction, delta);
+      _addPoints(user, task, stats, direction, delta, roll);
 
       // MP++ per checklist item in ToDo, bonus per CLI
       const multiplier = max([reduce(task.checklist, (m, i) => m + (i.completed ? 1 : 0), 1), 1]);
