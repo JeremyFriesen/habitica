@@ -132,7 +132,8 @@ export const TaskSchema = new Schema({
         modifier: { $type: Number, required: true },
       }],
     }, { _id: false, typeKey: '$type' }),
-  },  
+  },
+  critRoll: { $type: Number, default: 0 }, // stores the last roll value for GP bonus reversal on uncheck
   attribute: { $type: String, default: 'str', enum: ['str', 'con', 'int', 'per'] },
   userId: { $type: String, ref: 'User', validate: [v => validator.isUUID(v), 'Invalid uuid for task owner.'] }, // When not set it belongs to a challenge
 
