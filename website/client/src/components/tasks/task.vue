@@ -242,6 +242,17 @@
           </div>
           <div class="icons small-text d-flex align-items-center">
             <div
+              v-if="task.type !== 'reward'"
+              class="priority-stars d-flex align-items-center"
+            >
+              <span
+                v-for="n in priorityStars"
+                :key="n"
+                class="priority-star"
+                v-html="icons.difficultyStar"
+              ></span>
+            </div>
+            <div
               v-if="task.type === 'todo' && task.date"
               class="d-flex align-items-center"
               :class="{'due-overdue': checkIfOverdue() }"
@@ -727,6 +738,20 @@
     margin-left: 4px;
   }
 
+  .priority-stars {
+    gap: 0px;
+  }
+
+  .priority-star {
+    display: inline-flex;
+
+    ::v-deep svg {
+      width: 8px;
+      height: 8px;
+      fill: #FFBE5D;
+    }
+  }
+
   .svg-icon.streak {
     width: 11.6px;
     height: 7.1px;
@@ -920,6 +945,7 @@ import positiveIcon from '@/assets/svg/positive.svg?raw';
 import negativeIcon from '@/assets/svg/negative.svg?raw';
 import goldIcon from '@/assets/svg/gold.svg?raw';
 import streakIcon from '@/assets/svg/streak.svg?raw';
+import difficultyStarIcon from '@/assets/svg/difficulty-trivial.svg?raw';
 import calendarIcon from '@/assets/svg/calendar.svg?raw';
 import challengeIcon from '@/assets/svg/challenge.svg?raw';
 import brokenChallengeIcon from '@/assets/svg/broken-megaphone.svg?raw';
@@ -967,6 +993,7 @@ export default {
         negative: negativeIcon,
         gold: goldIcon,
         streak: streakIcon,
+        difficultyStar: difficultyStarIcon,
         calendar: calendarIcon,
         challenge: challengeIcon,
         brokenChallengeIcon,
@@ -994,6 +1021,10 @@ export default {
       canDelete: 'tasks:canDelete',
       canEdit: 'tasks:canEdit',
     }),
+    priorityStars () {
+      const map = { 0.1: 1, 1: 2, 1.5: 3, 2: 4 };
+      return map[this.task.priority] || 2;
+    },
     hasChecklist () {
       return this.task.checklist && this.task.checklist.length > 0;
     },
