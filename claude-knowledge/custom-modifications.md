@@ -79,7 +79,24 @@ Each task card shows 1–4 stars in the footer (left-aligned, vertically aligned
 | Medium (1.5) | 3 |
 | Hard (2) | 4 |
 
-## 8. Yesterdaily Modal Suppression
+## 8. Sale Value on Rewards
+
+**Field**: `task.saleValue` (Number, nullable, defaults to undefined)
+**Schema**: `website/server/models/task.js`, `website/common/script/libs/taskDefaults.js`
+**Scoring logic**: `website/common/script/ops/scoreTask.js`
+**UI**: `website/client/src/components/tasks/task.vue`
+
+When `task.saleValue` is set on a reward, it overrides `task.value` as the GP cost for both the afford check and the deduction. If absent, cost is calculated as normal. `variableValue` takes precedence over `saleValue` if both are set.
+
+UI indicators on sale cards:
+- Original price shown with strikethrough in small gray text above the sale price
+- Sale price shown in green (`#24CC8F`) with a pulsing glow animation
+- A `✦` spark (yellow, `#FFD700`, dark outline) positioned in the top-right corner of the card — position, animation duration, and start offset are all seeded from `task._id` so multiple sale items animate out of phase
+- Card background tinted light cyan (`#F0FEFE`) via `.task.on-sale .task-content`
+
+Set per-task via MongoDB or the task edit form.
+
+## 9. Yesterdaily Modal Suppression
 
 **File**: `website/client/src/components/notifications.vue`
 
