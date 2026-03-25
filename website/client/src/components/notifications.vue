@@ -632,13 +632,9 @@ export default {
         if (task.yesterDaily && due) this.yesterDailies.push(task);
       });
 
-      if (this.yesterDailies.length === 0) {
-        await this.runCronAction();
-        this.afterYesterdailies();
-      } else {
-        this.levelBeforeYesterdailies = this.user.stats.lvl;
-        this.$root.$emit('bv::show::modal', 'yesterdaily');
-      }
+      // Suppress yesterdaily modal — always run cron immediately
+      await this.runCronAction();
+      this.afterYesterdailies();
     },
     async runCronAction () {
       // Run Cron
