@@ -18,7 +18,7 @@ export function tasksOrder (store) {
   return type => store.state.user.tasksOrder[`${type}s`];
 }
 
-export function isDaxAdmin (store) {
+export function isUserAdmin (store) {
   const ua = navigator.userAgent || '';
 
   const isFirefox = ua.includes('Firefox');

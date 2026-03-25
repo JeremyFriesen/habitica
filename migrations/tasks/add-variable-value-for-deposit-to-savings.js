@@ -1,6 +1,6 @@
 /* Migration task done via mongosh
  * Date: 2026-03-23
- * Purpose: Add optional variable value boolean for Dax's '$$ Savings $$' reward
+ * Purpose: Add optional variable value boolean for User's '$$ Savings $$' reward
  */
 
 /* UP */

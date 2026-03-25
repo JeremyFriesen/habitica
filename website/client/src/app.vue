@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="isDaxAdmin" class="is-dax-admin-banner">
-      Dax Admin Mode
+    <div v-if="isUserAdmin" class="is-user-admin-banner">
+      {{ user?.profile?.name }} Admin Mode
     </div>
     <div
       v-if="loading"
@@ -41,7 +41,7 @@
 <style lang='scss' scoped>
   @import '@/assets/scss/colors.scss';
 
-  .is-dax-admin-banner {
+  .is-user-admin-banner {
     width: 100%;
 
     background-color: rgba(255, 53, 89, 0.95); // deep purple with some transparency
@@ -159,7 +159,7 @@ export default {
     ...mapState(['isUserLoggedIn', 'isUserLoaded', 'notificationsRemoved']),
     ...mapState({ user: 'user.data' }),
     ...mapGetters({
-      isDaxAdmin: 'user:isDaxAdmin',
+      isUserAdmin: 'user:isUserAdmin',
     }),
     isStaticPage () {
       return this.$route.meta.requiresLogin === false;
