@@ -50,7 +50,7 @@ Each deposit pushes `{ date: Number(new Date()), amount }` to `task.history` for
 
 **History**: `task.history` on reward tasks (`RewardSchema` includes `history: Array`)
 **Header display**: `website/client/src/components/header/menu.vue` → `weeklySavings` computed
-**Green coin icon**: `goldGreenIcon` computed — SVG color replaced `#FFA623`→`#24CC8F`, `#BF7D1A`→`#1CA372`
+**Icon**: 💎 emoji with `.savings-ruby` CSS class — colored via `filter: hue-rotate(150deg) saturate(7) brightness(0.8)`
 
 Weekly savings total (GP deposited since last Sunday) is shown inline to the right of GP in the top nav bar, with a green coin icon.
 
