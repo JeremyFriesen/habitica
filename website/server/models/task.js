@@ -110,6 +110,11 @@ export const TaskSchema = new Schema({
     default: undefined,
     required: false,
   },
+  saleValue: {
+    $type: Number,
+    default: undefined,
+    required: false,
+  },
   priority: {
     $type: Number,
     default: 1,

@@ -306,7 +306,9 @@ export default function scoreTask (options = {}, req = {}, analytics) {
     throw new BadRequest('Cannot score task belonging to another user.');
   }
   // If they're trying to purchase a too-expensive reward, don't allow them to do that.
-  const effectiveCost = (task.type === 'reward' && task.variableValue) ? amount : task.value;
+  const effectiveCost = (task.type === 'reward' && task.variableValue) ? amount
+    : (task.type === 'reward' && task.saleValue != null) ? task.saleValue
+    : task.value;
   if (effectiveCost > user.stats.gp && task.type === 'reward') throw new NotAuthorized(i18n.t('messageNotEnoughGold', req.language));
 
   if (task.type === 'habit') {
@@ -471,6 +473,8 @@ export default function scoreTask (options = {}, req = {}, analytics) {
 
     if (task.variableValue) {
       taskValue = amount >= 1 ? amount : 0;
+    } else if (task.saleValue != null) {
+      taskValue = task.saleValue;
     }
 
     // Don't adjust values for rewards

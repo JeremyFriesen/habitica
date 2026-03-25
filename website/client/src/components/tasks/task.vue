@@ -10,10 +10,17 @@
         'task-not-editable': !teamManagerAccess,
         'task-not-scoreable': showTaskLockIcon,
         'link-exempt': !isChallengeTask && !isGroupTask,
+        'on-sale': task.saleValue != null,
       }, `type_${task.type}`
       ]"
       @click="castEnd($event, task)"
     >
+      <span
+        v-if="task.saleValue != null"
+        class="sale-spark"
+        :style="saleSparkStyle"
+        aria-hidden="true"
+      >✦</span>
       <div
         class="d-flex"
         :class="{'task-not-scoreable': showTaskLockIcon }"
@@ -418,8 +425,15 @@
             class="svg-icon mb-1"
             v-html="icons.gold"
           ></div>
-          <div class="small-text">
-            {{ task.variableValue ? '?' : task.value }}
+          <div
+            v-if="task.saleValue != null"
+            class="small-text original-price"
+          >{{ task.value }}</div>
+          <div
+            class="small-text"
+            :class="{ 'sale-price': task.saleValue != null }"
+          >
+            {{ task.variableValue ? '?' : (task.saleValue != null ? task.saleValue : task.value) }}
           </div>
         </div>
       </div>
@@ -878,6 +892,30 @@
     margin-left: -1px;
   }
 
+  @keyframes sale-glow {
+    0%, 100% { text-shadow: 0 0 0px #24CC8F; }
+    50% { text-shadow: 0 0 6px #24CC8F; }
+  }
+
+  @keyframes sale-spark {
+    0%, 100% { opacity: 0.4; transform: scale(0.85) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1.15) rotate(50deg); }
+  }
+
+  .task.on-sale .task-content {
+    background-color: #FFFFF0;
+  }
+
+  .sale-spark {
+    position: absolute;
+    font-size: 12px;
+    color: #FFD700;
+    text-shadow: 0 0 2px rgba(0,0,0,0.7), 1px 1px 0 rgba(0,0,0,0.5), -1px -1px 0 rgba(0,0,0,0.5);
+    animation: sale-spark var(--spark-duration, 2s) ease-in-out var(--spark-delay, 0s) infinite;
+    pointer-events: none;
+    line-height: 1;
+  }
+
   .reward-control {
     flex-direction: column;
     padding-top: 8px;
@@ -896,6 +934,19 @@
     .small-text {
       font-style: initial;
       font-weight: bold;
+    }
+
+    .original-price {
+      text-decoration: line-through;
+      color: $gray-400;
+      font-size: 9px;
+      font-weight: normal;
+      line-height: 1;
+    }
+
+    .sale-price {
+      color: #24CC8F;
+      animation: sale-glow 2s ease-in-out infinite;
     }
   }
 
@@ -1147,6 +1198,24 @@ export default {
         }
       }
       return true;
+    },
+    saleSparkStyle () {
+      // Seed from task._id for stable per-task pseudo-random values
+      const id = this.task._id || '';
+      const s0 = id.charCodeAt(0) || 0;
+      const s1 = id.charCodeAt(1) || 0;
+      const s2 = id.charCodeAt(2) || 0;
+      const s3 = id.charCodeAt(3) || 0;
+      const duration = (1.8 + ((s0 + s1) % 14) / 10).toFixed(1); // 1.8s – 3.1s
+      const delay = `-${(((s1 + s2) % 19) / 10).toFixed(1)}s`;   // 0s – 1.8s offset
+      const top = (s2 % 7);                                   // 2px – 8px
+      const right = (s3 % 7);                                 // 2px – 8px
+      return {
+        '--spark-duration': `${duration}s`,
+        '--spark-delay': delay,
+        top: `${top}px`,
+        right: `${right}px`,
+      };
     },
   },
   methods: {
