@@ -10,7 +10,7 @@ A record of non-obvious bugs found in this fork, their root causes, and resoluti
 
 **Root cause**: `docker-compose.yml` mounted `./server` (an empty top-level dir) to an unused container path. `website/common/` was never live-mounted, so the server always ran code baked into the Docker image at build time. The `client-dev` container had a full repo mount and always used the latest code, creating a split.
 
-**Fix**: Corrected volume mounts in `docker-compose.yml` to `./website/server` and `./website/common`. See [docker.md](docker.md).
+**Fix**: First corrected to `./website/server` and `./website/common`, but this caused inotify to stop propagating and broke hot reload. Final fix: reverted to a full repo mount (`.:/usr/src/habitica:z`) matching `docker-compose.example.yml`. See [docker.md](docker.md).
 
 ---
 
