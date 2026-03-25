@@ -748,7 +748,7 @@
     ::v-deep svg {
       width: 8px;
       height: 8px;
-      fill: #FFBE5D;
+      fill: #DD9C3B;
     }
   }
 
