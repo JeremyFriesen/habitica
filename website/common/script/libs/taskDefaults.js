@@ -44,7 +44,7 @@ export default function taskDefaults (task, user) {
 
   defaults(task, defaultTaskObj);
 
-  if (task.type === 'habit' || task.type === 'daily') {
+  if (task.type === 'habit' || task.type === 'daily' || task.type === 'reward') {
     defaults(task, {
       history: [],
     });

@@ -477,6 +477,12 @@ export default function scoreTask (options = {}, req = {}, analytics) {
     delta += _changeTaskValue(user, task, direction, times, cron);
     // purchase item
     stats.gp -= taskValue;
+
+    if (task.variableValue && taskValue > 0) {
+      task.history = task.history || [];
+      task.history.push({ date: Number(new Date()), amount: taskValue });
+      if (task.markModified) task.markModified('history');
+    }
   }
 
   req.yesterDailyScored = task.yesterDailyScored;

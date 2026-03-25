@@ -434,5 +434,5 @@ export const TodoSchema = new Schema(_.defaults({
 }, dailyTodoSchema()), subDiscriminatorOptions);
 export const todo = Task.discriminator('todo', TodoSchema);
 
-export const RewardSchema = new Schema({}, subDiscriminatorOptions);
+export const RewardSchema = new Schema({ history: Array }, subDiscriminatorOptions);
 export const reward = Task.discriminator('reward', RewardSchema);
