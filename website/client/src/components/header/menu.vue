@@ -418,6 +418,15 @@
             ></div>
             <span>{{ Math.floor(user.stats.gp * 100) / 100 }}</span>
           </div>
+          <div class="item-with-icon savings-week">
+            <div
+              v-b-tooltip.hover.bottom="'Saved this week'"
+              class="top-menu-icon svg-icon mr-2"
+              aria-label="Saved this week"
+              v-html="goldGreenIcon"
+            ></div>
+            <span>{{ weeklySavings }}</span>
+          </div>
         </div>
         <div class="form-inline desktop-only">
           <a
@@ -570,6 +579,10 @@ body.modal-open #habitica-menu {
 
     &.gold {
       margin-left: 12px;
+      margin-right: 8px;
+    }
+
+    &.savings-week {
       margin-right: 36px;
     }
 
@@ -843,6 +856,27 @@ export default {
       groupPlans: 'groupPlans.data',
       modalStack: 'modalStack',
     }),
+    goldGreenIcon () {
+      return this.icons.gold
+        .replace(/#FFA623/g, '#24CC8F')
+        .replace(/#BF7D1A/g, '#1CA372');
+    },
+    weeklySavings () {
+      const rewards = this.$store.state.tasks
+        && this.$store.state.tasks.data
+        && this.$store.state.tasks.data.rewards;
+      if (!rewards) return 0;
+      // _id: '717166ff-baec-4a2a-94c3-17046fccd02a' is the savings task, which is currently the only task that tracks gold savings in its history.
+      const savingsTask = rewards.find(t => t._id === '717166ff-baec-4a2a-94c3-17046fccd02a');
+      if (!savingsTask || !savingsTask.history || !savingsTask.history.length) return 0;
+      const lastSunday = new Date();
+      lastSunday.setDate(lastSunday.getDate() - lastSunday.getDay());
+      lastSunday.setHours(0, 0, 0, 0);
+      const lastSundayTs = lastSunday.getTime();
+      return savingsTask.history
+        .filter(entry => entry.date >= lastSundayTs)
+        .reduce((sum, entry) => sum + (entry.amount || 0), 0);
+    },
     groupPlanTopLink () {
       if (!this.groupPlans || this.groupPlans.length === 0) return { name: 'groupPlan' };
       return {
