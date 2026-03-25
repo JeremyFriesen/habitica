@@ -421,10 +421,9 @@
           <div class="item-with-icon savings-week">
             <div
               v-b-tooltip.hover.bottom="'Saved this week'"
-              class="top-menu-icon svg-icon mr-2"
+              class="top-menu-icon svg-icon mr-2 savings-ruby"
               aria-label="Saved this week"
-              v-html="goldGreenIcon"
-            ></div>
+            >💎</div>
             <span>{{ weeklySavings }}</span>
           </div>
         </div>
@@ -584,11 +583,21 @@ body.modal-open #habitica-menu {
 
     &.savings-week {
       margin-right: 36px;
+      display: flex;
+      align-items: center;
     }
 
     &:focus ::v-deep .top-menu-icon.svg-icon,
     &:hover ::v-deep .top-menu-icon.svg-icon {
       color: $white;
+    }
+
+    .savings-ruby {
+      filter: hue-rotate(150deg) saturate(7) brightness(0.8);
+      font-size: 24px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
     }
 
     & ::v-deep .top-menu-icon.svg-icon {
@@ -856,11 +865,6 @@ export default {
       groupPlans: 'groupPlans.data',
       modalStack: 'modalStack',
     }),
-    goldGreenIcon () {
-      return this.icons.gold
-        .replace(/#FFA623/g, '#24CC8F')
-        .replace(/#BF7D1A/g, '#1CA372');
-    },
     weeklySavings () {
       const rewards = this.$store.state.tasks
         && this.$store.state.tasks.data
