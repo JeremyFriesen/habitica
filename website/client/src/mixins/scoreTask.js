@@ -81,6 +81,19 @@ export default {
 
       this.handleTaskScoreNotifications(response.data.data._tmp || {});
 
+      if (direction === 'up') {
+        const adventureChanceByPriority = {
+          0.1: 0, // trivial
+          1: 0,   // easy
+          1.5: 0, // medium
+          2: 0,   // hard
+        };
+        const chance = adventureChanceByPriority[task.priority] ?? 0;
+        if (Math.random() < chance) {
+          this.$root.$emit('habitica:show-adventure-modal', task);
+        }
+      }
+
       const tasksScoredCount = getLocalSetting(CONSTANTS.keyConstants.TASKS_SCORED_COUNT);
       if (!tasksScoredCount || tasksScoredCount < 2) {
         Analytics.track({

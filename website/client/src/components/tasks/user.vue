@@ -6,6 +6,7 @@
     <broken-task-modal />
     <crit-roll-modal />
     <savings-amount-modal />
+    <task-adventure-modal />
     <task-modal
       ref="taskModal"
       :task="editingTask || creatingTask"
@@ -433,6 +434,7 @@ import { mapState, mapActions } from '@/libs/store';
 import brokenTaskModal from './brokenTaskModal';
 import critRollModal from './critRollModal';
 import savingsAmountModal from './savingsAmountModal';
+import taskAdventureModal from './taskAdventureModal';
 import emojiAutoComplete from '@/components/chat/emojiAutoComplete';
 import { autoCompleteHelperMixin } from '@/mixins/autoCompleteHelper';
 
@@ -445,6 +447,7 @@ export default {
     brokenTaskModal,
     critRollModal,
     savingsAmountModal,
+    taskAdventureModal,
     draggable,
     emojiAutoComplete,
   },
