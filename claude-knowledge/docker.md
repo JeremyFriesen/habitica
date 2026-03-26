@@ -47,6 +47,16 @@ docker compose build server && docker compose up -d server
 cd website/client && npm run build
 ```
 
+## MongoDB Access
+
+```sh
+# Connect to the MongoDB shell
+docker exec -it habitica-mongodb mongosh
+
+# Select the correct database once inside
+use habitrpg
+```
+
 ## History: Why the Volume Mounts Were Fixed
 
 The original `docker-compose.yml` mounted `./server:/usr/src/habitica/server:z` — an empty top-level directory to an unused container path. `website/common/` was never live-mounted, so changes to `scoreTask.js` required a full image rebuild. Meanwhile `client-dev` had a full repo mount and always used the latest code. This caused a frontend/backend split where UI showed custom GP values but the DB was updated with old code.
