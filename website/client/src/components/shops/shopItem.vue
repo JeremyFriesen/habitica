@@ -180,6 +180,10 @@
       background-color: rgba($yellow-100, 0.15);
     }
 
+    &.copper {
+      background-color: rgba(205, 127, 50, 0.15);
+    }
+
     &.hourglasses {
       background-color: rgba($blue-50, 0.15);
     }
@@ -199,6 +203,10 @@
 
     &.gold {
       color: $yellow-1;
+    }
+
+    &.copper {
+      color: #7A3F10;
     }
 
     &.unlock {
@@ -273,6 +281,7 @@ import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 import svgGem from '@/assets/svg/gem.svg?raw';
 import svgGold from '@/assets/svg/gold.svg?raw';
+import svgCopper from '@/assets/svg/copper.svg?raw';
 import svgHourglasses from '@/assets/svg/hourglass.svg?raw';
 import svgLock from '@/assets/svg/lock.svg?raw';
 import svgCheck from '@/assets/svg/check.svg?raw';
@@ -328,6 +337,7 @@ export default {
       icons: Object.freeze({
         gems: svgGem,
         gold: svgGold,
+        copper: svgCopper,
         lock: svgLock,
         check: svgCheck,
         hourglasses: svgHourglasses,

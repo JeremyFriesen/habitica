@@ -48,6 +48,7 @@
             <li>Health: {{ user.stats.hp }}/{{ user.stats.maxHealth }}</li>
             <li>Mana: {{ user.stats.mp }}/{{ user.stats.maxMP }}</li>
             <li>Gold: {{ user.stats.gp }}</li>
+            <li>Stone: {{ user.stats.cp }}</li>
             <li>Level: {{ user.stats.lvl }}</li>
             <li>Experience: {{ user.stats.exp }}</li>
           </ul>

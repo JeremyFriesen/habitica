@@ -145,7 +145,7 @@ export default function getItemInfo (user, type, item, officialPinnedItems, lang
         notes: item.notes(language),
         addlNotes: item.addlNotes ? item.addlNotes(language) : null,
         group: item.group,
-        value: item.goldValue ? item.goldValue : item.value,
+        value: item.goldValue ? item.goldValue : item.value, // upstream field name retained; currency is now CP
         locked,
         previous: content.quests[item.previous]
           ? content.quests[item.previous].text(language)
@@ -164,8 +164,8 @@ export default function getItemInfo (user, type, item, officialPinnedItems, lang
         path: `quests.${item.key}`,
         pinType: 'quests',
       };
-      if (item.goldValue) {
-        itemInfo.currency = 'gold';
+      if (item.goldValue) { // upstream field name retained; currency is now CP
+        itemInfo.currency = 'copper';
       } else if (item.category === 'timeTravelers') {
         itemInfo.currency = 'hourglasses';
       } else {
@@ -240,7 +240,7 @@ export default function getItemInfo (user, type, item, officialPinnedItems, lang
     case 'marketGear':
       itemInfo = Object.assign(getDefaultGearProps(item, language), {
         value: item.value,
-        currency: 'gold',
+        currency: 'copper',
         pinType: 'marketGear',
         canOwn: item.canOwn,
       });
@@ -278,7 +278,7 @@ export default function getItemInfo (user, type, item, officialPinnedItems, lang
         text: item.text(language),
         notes: item.notes(language),
         value: item.value,
-        currency: 'gold',
+        currency: 'copper',
         purchaseType: 'potion',
         class: `shop_${item.key}`,
         path: 'potion',
@@ -291,7 +291,7 @@ export default function getItemInfo (user, type, item, officialPinnedItems, lang
         text: item.text(language),
         notes: item.notes(count.remainingGearInSet(user.items.gear.owned, 'armoire')),
         value: item.value,
-        currency: 'gold',
+        currency: 'copper',
         purchaseType: 'armoire',
         class: `shop_${item.key}`,
         path: 'armoire',

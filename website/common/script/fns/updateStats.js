@@ -14,6 +14,7 @@ export default function updateStats (user, stats) {
 
   user.stats.hp = stats.hp > 0 ? stats.hp : 0;
   user.stats.gp = stats.gp > 0 ? stats.gp : 0;
+  user.stats.cp = stats.cp > 0 ? stats.cp : 0;
   if (!user._tmp) user._tmp = {};
 
   experienceToNextLevel = toNextLevel(user.stats.lvl);

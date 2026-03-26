@@ -86,12 +86,13 @@
               <span class="rectangle"></span>
             </div>
             <div class="items margin-center">
+              <!-- upstream field name goldValue retained; these quests originally cost GP but now cost CP -->
               <shopItem
                 v-for="item in shop.featured.items"
                 :key="item.key"
                 :item="item"
                 :price="item.goldValue ? item.goldValue : item.value"
-                :price-type="item.goldValue ? 'gold' : 'gem'"
+                :price-type="item.goldValue ? 'copper' : 'gem'"
                 :item-content-class="`inventory_quest_scroll_${item.key}`"
                 :empty-item="false"
                 :popover-position="'top'"

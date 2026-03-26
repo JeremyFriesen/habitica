@@ -338,6 +338,7 @@ export default {
       user: 'user.data',
       userHp: 'user.data.stats.hp',
       userGp: 'user.data.stats.gp',
+      userCp: 'user.data.stats.cp',
       userMp: 'user.data.stats.mp',
       userNotifications: 'user.data.notifications',
       userAchievements: 'user.data.achievements', // @TODO: does this watch deeply?
@@ -385,7 +386,10 @@ export default {
       if (this.user._tmp) {
         bonus = this.user._tmp.streakBonus || 0;
       }
-      this.gp(money, bonus || 0);
+
+      this._pendingGpDelta = money;
+      this._pendingGpBonus = bonus || 0;
+      this.$nextTick(this._flushCurrencyNotification);
 
       //  Append Bonus
       if (money > 0 && Boolean(bonus)) {
@@ -393,6 +397,13 @@ export default {
         this.streak(`+ ${this.coins(bonus)}`);
         delete this.user._tmp.streakBonus;
       }
+    },
+    userCp (after, before) {
+      if (after === before) return;
+      if (this.user.stats.lvl === 0) return;
+
+      this._pendingCpDelta = after - before;
+      this.$nextTick(this._flushCurrencyNotification);
     },
     userMp (after, before) {
       if (after === before) return;
@@ -450,6 +461,22 @@ export default {
     document.removeEventListener('keydown', this.checkNextCron);
   },
   methods: {
+    _flushCurrencyNotification () {
+      const gpDelta = this._pendingGpDelta;
+      const cpDelta = this._pendingCpDelta;
+      const bonus = this._pendingGpBonus || 0;
+      this._pendingGpDelta = null;
+      this._pendingCpDelta = null;
+      this._pendingGpBonus = 0;
+
+      if (gpDelta !== null && gpDelta !== undefined && cpDelta !== null && cpDelta !== undefined) {
+        this.gpAndCp(gpDelta, cpDelta, bonus);
+      } else if (gpDelta !== null && gpDelta !== undefined) {
+        this.gp(gpDelta, bonus);
+      } else if (cpDelta !== null && cpDelta !== undefined) {
+        this.cp(cpDelta);
+      }
+    },
     runForcedModals () {
       if (!this.user.flags.verifiedUsername) return this.$root.$emit('bv::show::modal', 'verify-username');
 

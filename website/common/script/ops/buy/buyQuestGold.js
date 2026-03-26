@@ -6,10 +6,12 @@ import {
 } from '../../libs/errors';
 import content from '../../content/index';
 
-import { AbstractGoldItemOperation } from './abstractBuyOperation';
+import { AbstractCopperItemOperation } from './abstractBuyOperation';
 import { errorMessage } from '../../libs/errorMessage';
 
-export class BuyQuestWithGoldOperation extends AbstractGoldItemOperation { // eslint-disable-line import/prefer-default-export, max-len
+// Fork: quests that originally cost gold (GP) now cost copper (CP).
+// `goldValue` is the upstream Habitica field name and is intentionally not renamed.
+export class BuyQuestWithGoldOperation extends AbstractCopperItemOperation { // eslint-disable-line import/prefer-default-export, max-len
   multiplePurchaseAllowed () { // eslint-disable-line class-methods-use-this
     return true;
   }
@@ -26,7 +28,7 @@ export class BuyQuestWithGoldOperation extends AbstractGoldItemOperation { // es
   }
 
   getItemValue (item) { // eslint-disable-line class-methods-use-this
-    return item.goldValue;
+    return item.goldValue; // upstream field name retained; currency is now CP
   }
 
   getItemType () { // eslint-disable-line class-methods-use-this
@@ -42,7 +44,7 @@ export class BuyQuestWithGoldOperation extends AbstractGoldItemOperation { // es
 
     if (!item) throw new NotFound(errorMessage('questNotFound', { key }));
 
-    if (!(item.goldValue)) {
+    if (!(item.goldValue)) { // upstream field name retained; currency is now CP
       throw new NotAuthorized(this.i18n('questNotGoldPurchasable', { key }));
     }
 

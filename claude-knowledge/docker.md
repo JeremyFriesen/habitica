@@ -49,6 +49,4 @@ cd website/client && npm run build
 
 ## History: Why the Volume Mounts Were Fixed
 
-The original `docker-compose.yml` mounted `./server:/usr/src/habitica/server:z` — an empty top-level directory to an unused container path. `website/common/` was never live-mounted, so changes to `scoreTask.js` required a full image rebuild. Meanwhile `client-dev` had a full repo mount and always used the latest code. This caused a frontend/backend split where UI showed custom GP values but the DB was updated with old code.
-
-An intermediate fix pointed at `website/server/` and `website/common/`, but this broke inotify propagation and caused hot reload to stop working for both `node --watch` and Vite HMR. Final fix (2026-03-24): reverted to a full repo mount (`.:/usr/src/habitica:z`) matching `docker-compose.example.yml`.
+See [bugs-and-fixes.md](bugs-and-fixes.md) → "Docker volume mounts caused frontend/backend GP split".

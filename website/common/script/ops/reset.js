@@ -10,6 +10,7 @@ export default function reset (user, tasks = []) {
   user.stats.per = 0;
   user.stats.int = 0;
   user.stats.gp = 0;
+  user.stats.cp = 0;
   user.stats.exp = 0;
 
   const tasksToRemove = [];

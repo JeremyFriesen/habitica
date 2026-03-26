@@ -11,8 +11,8 @@ export function hasCompletedOnboarding (user) {
 }
 
 export function onOnboardingComplete (user) {
-  // Award gold
-  user.stats.gp += 100;
+  // Award copper
+  user.stats.cp += 100;
 }
 
 // Add notification and awards (server)

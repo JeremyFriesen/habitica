@@ -64,6 +64,7 @@
         </div>
       </item-with-label>
 
+      <!-- upstream field name: drop.gp; currency is now CP -->
       <item-with-label
         v-if="quest.drop.gp > 0"
         :item="{}"
@@ -72,11 +73,11 @@
         <div slot="itemImage">
           <div
             class="icon-48"
-            v-html="icons.goldIcon"
+            v-html="icons.copperIcon"
           ></div>
         </div>
         <div slot="label">
-          {{ $t('amountGold', { amount: quest.drop.gp }) }}
+          {{ $t('amountCopper', { amount: quest.drop.gp }) }}
         </div>
       </item-with-label>
 
@@ -126,7 +127,7 @@
 <script>
 import sparkles from '@/assets/svg/sparkles-left.svg?raw';
 import expIcon from '@/assets/svg/experience.svg?raw';
-import goldIcon from '@/assets/svg/gold.svg?raw';
+import copperIcon from '@/assets/svg/copper.svg?raw';
 import SectionButton from '../../sectionButton';
 import ItemWithLabel from '../itemWithLabel';
 import { QuestHelperMixin } from './quest-helper.mixin';
@@ -152,7 +153,7 @@ export default {
       icons: Object.freeze({
         sparkles,
         expIcon,
-        goldIcon,
+        copperIcon,
       }),
     };
   },

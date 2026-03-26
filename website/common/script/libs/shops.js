@@ -464,9 +464,9 @@ shops.getSeasonalGearBySet = function getSeasonalGearBySet (
     const itemInfo = getItemInfo(null, currentSet ? 'marketGear' : 'gear', gear, officialPinnedItems, language, gearMatcher);
     itemInfo.locked = currentSet && user.stats.class !== gear.specialClass;
 
-    // gear that has previously been owned should be repurchaseable with gold
+    // gear that has previously been owned should be repurchaseable with copper
     if (user.items.gear.owned[gear.key] !== undefined) {
-      itemInfo.currency = 'gold';
+      itemInfo.currency = 'copper';
     }
 
     return itemInfo;

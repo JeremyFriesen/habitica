@@ -419,7 +419,7 @@ export default {
     },
     addGold () {
       this.$store.dispatch('user:set', {
-        'stats.gp': this.user.stats.gp + 500,
+        'stats.cp': this.user.stats.cp + 500,
       });
     },
     addMana () {
@@ -430,7 +430,7 @@ export default {
     addLevelsAndGold () {
       this.$store.dispatch('user:set', {
         'stats.exp': this.user.stats.exp + 10000,
-        'stats.gp': this.user.stats.gp + 10000,
+        'stats.cp': this.user.stats.cp + 10000,
         'stats.mp': this.user.stats.mp + 10000,
       });
     },

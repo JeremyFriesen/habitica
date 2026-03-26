@@ -22,6 +22,7 @@
   "messageAlreadyPet": "You already have that pet. Try hatching a different combination!",
   "messageHatched": "Your egg hatched! Visit Pets and Mounts to equip your pet.",
   "messageNotEnoughGold": "Not Enough Gold",
+  "messageNotEnoughCopper": "Not Enough Stone",
   "messageTwoHandedEquip": "Wielding <%= twoHandedText %> takes two hands, so <%= offHandedText %> has been unequipped.",
   "messageTwoHandedUnequip": "Wielding <%= twoHandedText %> takes two hands, so it was unequipped when you armed yourself with <%= offHandedText %>.",
   "messageDropFood": "You've found <%= dropText %>!",

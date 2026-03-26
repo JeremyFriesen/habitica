@@ -160,6 +160,38 @@ export class AbstractGoldItemOperation extends AbstractBuyOperation {
   }
 }
 
+export class AbstractCopperItemOperation extends AbstractBuyOperation {
+  canUserPurchase (user, item) {
+    this.item = item;
+    const itemValue = this.getItemValue(item);
+
+    const userCopper = user.stats.cp;
+
+    if (userCopper < itemValue * this.quantity) {
+      throw new NotAuthorized(this.i18n('messageNotEnoughCopper'));
+    }
+
+    if (item && item.canOwn && !item.canOwn(user)) {
+      throw new NotAuthorized(this.i18n('cannotBuyItem'));
+    }
+  }
+
+  async subtractCurrency (user, item) {
+    const itemValue = this.getItemValue(item);
+
+    user.stats.cp -= itemValue * this.quantity;
+  }
+
+  analyticsData () {
+    return {
+      itemKey: this.getItemKey(this.item),
+      itemType: this.getItemType(this.item),
+      currency: 'Copper',
+      copperCost: this.getItemValue(this.item),
+    };
+  }
+}
+
 export class AbstractGemItemOperation extends AbstractBuyOperation {
   canUserPurchase (user, item) {
     this.item = item;

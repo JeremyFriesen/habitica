@@ -23,7 +23,7 @@ This applies across all knowledge types: project knowledge, claude knowledge, an
 | Topic | File | What's in it |
 |---|---|---|
 | System architecture, request flow, key files | [architecture.md](architecture.md) | Layer overview, task scoring flow, API routing, file map |
-| Fork divergences from upstream Habitica | [custom-modifications.md](custom-modifications.md) | GP scoring, criticalityChance, variableValue, admin mode, habit buttons |
+| Fork divergences from upstream Habitica | [custom-modifications.md](custom-modifications.md) | GP scoring, criticalityChance, variableValue, admin mode, habit buttons, copper points (CP) |
 | Docker services, volumes, hot reload, rebuild | [docker.md](docker.md) | Service ports, volume mounts, rebuild commands |
 | Mongoose, shared code rules, module system | [code-patterns.md](code-patterns.md) | typeKey, partial loads, browser-only API restrictions |
 | All npm and docker commands | [commands.md](commands.md) | Server, client, test, and docker commands |

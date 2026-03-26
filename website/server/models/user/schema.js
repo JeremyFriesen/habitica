@@ -672,6 +672,7 @@ export const UserSchema = new Schema({
     mp: { $type: Number, default: 10, min: 0 },
     exp: { $type: Number, default: 0 },
     gp: { $type: Number, default: 0, min: 0 },
+    cp: { $type: Number, default: 0, min: 0 },
     lvl: {
       $type: Number,
       default: 1,

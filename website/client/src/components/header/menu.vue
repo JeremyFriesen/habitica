@@ -418,6 +418,15 @@
             ></div>
             <span>{{ Math.floor(user.stats.gp * 100) / 100 }}</span>
           </div>
+          <div class="item-with-icon copper">
+            <div
+              v-b-tooltip.hover.bottom="$t('copper')"
+              class="top-menu-icon svg-icon mr-2"
+              :aria-label="$t('copper')"
+              v-html="icons.copper"
+            ></div>
+            <span>{{ Math.floor(user.stats.cp * 100) / 100 }}</span>
+          </div>
           <div class="item-with-icon savings-week">
             <div
               v-b-tooltip.hover.bottom="'Saved this week'"
@@ -577,6 +586,11 @@ body.modal-open #habitica-menu {
     }
 
     &.gold {
+      margin-left: 12px;
+      margin-right: 8px;
+    }
+
+    &.copper {
       margin-left: 12px;
       margin-right: 8px;
     }
@@ -811,6 +825,7 @@ import { goToModForm } from '@/libs/modform';
 
 import gemIcon from '@/assets/svg/gem.svg?raw';
 import goldIcon from '@/assets/svg/gold.svg?raw';
+import copperIcon from '@/assets/svg/copper.svg?raw';
 import syncIcon from '@/assets/svg/sync.svg?raw';
 import svgHourglasses from '@/assets/svg/hourglass.svg?raw';
 import chevronDownIcon from '@/assets/svg/chevron-down.svg?raw';
@@ -848,6 +863,7 @@ export default {
       icons: Object.freeze({
         gem: gemIcon,
         gold: goldIcon,
+        copper: copperIcon,
         hourglasses: svgHourglasses,
         sync: syncIcon,
         melior,

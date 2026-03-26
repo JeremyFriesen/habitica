@@ -43,6 +43,12 @@ export const NotificationMixins = {
     gp (val, bonus) {
       this.notify(`${this.sign(val)} ${this.coins(val - bonus)}`, 'gp', '', this.sign(val));
     },
+    cp (val) {
+      this.notify(`${this.sign(val)} ${this.coins(val)}`, 'cp', '', this.sign(val));
+    },
+    gpAndCp (gpVal, cpVal, bonus) {
+      this.notify(`${this.sign(gpVal)} ${this.coins(gpVal - bonus)}`, 'gp_cp', '', this.sign(gpVal), null, true, null, cpVal);
+    },
     hp (val) {
       // don't show notifications if user dead
       this.notify(`${this.sign(val)} ${this.round(val)}`, 'hp', 'glyphicon glyphicon-heart', this.sign(val));
@@ -77,7 +83,7 @@ export const NotificationMixins = {
     round (number, nDigits) {
       return round(number, nDigits);
     },
-    notify (html, type, icon, sign, onClick, timeout = true, delay) {
+    notify (html, type, icon, sign, onClick, timeout = true, delay, cpVal) {
       this.$store.dispatch('snackbars:add', {
         title: '',
         text: html,
@@ -87,6 +93,7 @@ export const NotificationMixins = {
         onClick,
         timeout,
         delay,
+        cpVal,
       });
     },
   },

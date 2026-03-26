@@ -42,6 +42,7 @@
 <script>
 import svgGem from '@/assets/svg/gem.svg?raw';
 import svgGold from '@/assets/svg/gold.svg?raw';
+import svgCopper from '@/assets/svg/copper.svg?raw';
 import svgHourglasses from '@/assets/svg/hourglass.svg?raw';
 
 import currencyMixin from './_currencyMixin';
@@ -64,6 +65,7 @@ export default {
       icons: Object.freeze({
         gem: svgGem,
         gold: svgGold,
+        copper: svgCopper,
         hourglasses: svgHourglasses,
       }),
     };
@@ -86,6 +88,12 @@ export default {
         type: 'gold',
         icon: this.icons.gold,
         value: this.userGold,
+      },
+
+      {
+        type: 'copper',
+        icon: this.icons.copper,
+        value: this.userCopper,
       }];
 
       for (const currency of currencies) {

@@ -627,6 +627,7 @@ import sync from '@/mixins/sync';
 
 import svgClose from '@/assets/svg/close.svg?raw';
 import svgGold from '@/assets/svg/gold.svg?raw';
+import svgCopper from '@/assets/svg/copper.svg?raw';
 import svgGem from '@/assets/svg/gem.svg?raw';
 import svgHourglasses from '@/assets/svg/hourglass.svg?raw';
 import svgClock from '@/assets/svg/clock.svg?raw';
@@ -704,6 +705,7 @@ export default {
       icons: Object.freeze({
         close: svgClose,
         gold: svgGold,
+        copper: svgCopper,
         gems: svgGem,
         hourglasses: svgHourglasses,
         clock: svgClock,

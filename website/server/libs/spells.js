@@ -167,7 +167,7 @@ async function castSpell (req, res, { isV3 = false }) {
 
   if (!spell) throw new NotFound(apiError('spellNotFound', { spellId }));
   if (spell.mana > user.stats.mp) throw new NotAuthorized(res.t('notEnoughMana'));
-  if (spell.value > user.stats.gp && !spell.previousPurchase) throw new NotAuthorized(res.t('messageNotEnoughGold'));
+  if (spell.value > user.stats.cp && !spell.previousPurchase) throw new NotAuthorized(res.t('messageNotEnoughCopper'));
   if (spell.lvl > user.stats.lvl) throw new NotAuthorized(res.t('spellLevelTooHigh', { level: spell.lvl }));
 
   const targetType = spell.target;

@@ -363,6 +363,9 @@ api.updateHero = {
       if (updateData.stats.gp || updateData.stats.gp === 0) {
         hero.stats.gp = updateData.stats.gp;
       }
+      if (updateData.stats.cp || updateData.stats.cp === 0) {
+        hero.stats.cp = updateData.stats.cp;
+      }
       if (updateData.stats.lvl || updateData.stats.lvl === 0) {
         hero.stats.lvl = updateData.stats.lvl;
       }

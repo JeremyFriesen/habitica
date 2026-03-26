@@ -933,7 +933,7 @@ schema.methods.finishQuest = async function finishQuest (quest) {
   const updates = {
     $inc: {
       [`achievements.quests.${questK}`]: 1,
-      'stats.gp': Number(quest.drop.gp),
+      'stats.cp': Number(quest.drop.gp), // upstream field name: drop.gp; currency is now CP
       'stats.exp': Number(quest.drop.exp),
     },
     $set: {},

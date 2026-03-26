@@ -50,6 +50,15 @@
       background-color: rgba(255, 190, 93, 0.15);
     }
 
+    &.copper {
+      color: $copper-color;
+      border-radius: 20px;
+      padding: 8px 20px 8px 20px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      background-color: rgba($copper-color, 0.15);
+    }
+
     &.hourglasses {
       color: $hourglass-color;
       border-radius: 20px;
@@ -64,6 +73,7 @@
 <script>
 import svgClose from '@/assets/svg/close.svg?raw';
 import svgGold from '@/assets/svg/gold.svg?raw';
+import svgCopper from '@/assets/svg/copper.svg?raw';
 import svgGem from '@/assets/svg/gem.svg?raw';
 
 export default {
@@ -72,6 +82,7 @@ export default {
       icons: Object.freeze({
         close: svgClose,
         gold: svgGold,
+        copper: svgCopper,
         gems: svgGem,
       }),
       selectedAmountToBuy: 1,

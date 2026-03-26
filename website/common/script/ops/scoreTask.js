@@ -121,43 +121,15 @@ function _subtractPoints (user, task, stats, delta) {
 function _addPoints (user, task, stats, direction, delta, roll = 0) {
   const _crit = user._tmp.crit || 1;
 
-  // Exp Modifier
-  // ===== Intelligence =====
-  // TODO Increases Experience gain by .2% per point.
+  // EXP modifier — scales with Intelligence (+2.5% per point)
   const intBonus = 1 + statsComputed(user).int * 0.025;
   stats.exp += Math.round(delta * intBonus * task.priority * _crit * 6);
 
-  // GP modifier
-  // ===== PERCEPTION =====
-  // TODO Increases Gold gained from tasks by .3% per point.
+  // GP — fixed amounts by priority (fork override of original delta-based formula)
+  // GP awards: Trivial: 100, Easy: 200, Medium: 300, Hard: 400
+
+  // perBonus is used by CP below; declared here as it belongs to the GP/CP section
   const perBonus = 1 + statsComputed(user).per * 0.02;
-  // const gpMod = delta * task.priority * _crit * perBonus;
-
-  // if (task.streak) {
-  //   const currStreak = direction === 'down' ? task.streak - 1 : task.streak;
-  //   const streakBonus = currStreak / 100 + 1; // eg, 1-day streak is 1.01, 2-day is 1.02, etc
-  //   const afterStreak = gpMod * streakBonus;
-  //   if (currStreak > 0 && gpMod > 0) {
-  //     // keep this on-hand for later, so we can notify streak-bonus
-  //     user._tmp.streakBonus = afterStreak - gpMod;
-  //   }
-
-  //   stats.gp += afterStreak;
-  // } else {
-
-  /* The game defaults to:
-    - Trivial: 0.1
-    - Easy: 0.5
-    - Medium: 1
-    - Hard: 1.5
-
-  This is a simple hack to change the amount of gp earned for each priotity to be:
-    - Trivial: 100
-    - Easy: 200
-    - Medium: 300
-    - Hard: 400
-
-    */
 
   const gpByPriority = {
     "0.1": 100,
@@ -193,6 +165,21 @@ function _addPoints (user, task, stats, direction, delta, roll = 0) {
   const gpMod = gpByPriority[task.priority] * (1 + gpBonusMod);
 
   stats.gp += direction === 'down' ? -gpMod : gpMod;
+
+  // CP uses the original Habitica GP formula (above was replaced with fixed amounts for GP)
+  const cpMod = delta * task.priority * _crit * perBonus;
+
+  if (task.streak) {
+    const currStreak = direction === 'down' ? task.streak - 1 : task.streak;
+    const streakBonus = currStreak / 100 + 1; // 1-day streak = 1.01, 2-day = 1.02, etc
+    const afterStreak = cpMod * streakBonus;
+    if (currStreak > 0 && cpMod > 0) {
+      user._tmp.streakBonus = afterStreak - cpMod;
+    }
+    stats.cp += afterStreak;
+  } else {
+    stats.cp += cpMod;
+  }
 }
 
 function _changeTaskValue (user, task, direction, times, cron) {
@@ -284,6 +271,7 @@ export default function scoreTask (options = {}, req = {}, analytics) {
   let delta = 0;
   const stats = {
     gp: user.stats.gp,
+    cp: user.stats.cp,
     hp: user.stats.hp,
     exp: user.stats.exp,
   };

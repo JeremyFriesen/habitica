@@ -8,7 +8,7 @@ import {
 } from '../../libs/errors';
 import randomVal, * as randomValFns from '../../libs/randomVal';
 import { removeItemByPath } from '../pinnedGearUtils';
-import { AbstractGoldItemOperation } from './abstractBuyOperation';
+import { AbstractCopperItemOperation } from './abstractBuyOperation';
 import updateStats from '../../fns/updateStats';
 
 // TODO this is only used on the server
@@ -17,7 +17,7 @@ import updateStats from '../../fns/updateStats';
 const YIELD_EQUIPMENT_THRESHOLD = 0.6;
 const YIELD_FOOD_THRESHOLD = 0.8;
 
-export class BuyArmoireOperation extends AbstractGoldItemOperation { // eslint-disable-line import/prefer-default-export, max-len
+export class BuyArmoireOperation extends AbstractCopperItemOperation { // eslint-disable-line import/prefer-default-export, max-len
   multiplePurchaseAllowed () { // eslint-disable-line class-methods-use-this
     return false;
   }

@@ -46,7 +46,7 @@
           </div>
         </div>
         <div
-          v-if="['hp', 'gp', 'xp', 'mp'].indexOf(notification.type) !== -1"
+          v-if="['hp', 'gp', 'cp', 'xp', 'mp'].indexOf(notification.type) !== -1"
           class="row"
         >
           <div class="text">
@@ -64,6 +64,11 @@
               v-html="icons.gold"
             ></div>
             <div
+              v-if="notification.type === 'cp'"
+              class="svg-icon"
+              v-html="icons.copper"
+            ></div>
+            <div
               v-if="notification.type === 'xp'"
               class="svg-icon"
               v-html="icons.star"
@@ -77,6 +82,31 @@
               class="icon-text"
               v-html="notification.text"
             ></div>
+          </div>
+        </div>
+        <div
+          v-if="notification.type === 'gp_cp'"
+          class="row"
+        >
+          <div class="text">
+            <div>{{ $t('gainedGold') }} &amp; {{ $t('gainedCopper') }}</div>
+          </div>
+          <div class="icon d-flex align-items-center">
+            <div
+              class="svg-icon"
+              v-html="icons.gold"
+            ></div>
+            <div
+              class="icon-text mr-2"
+              v-html="notification.text"
+            ></div>
+            <div
+              class="svg-icon"
+              v-html="icons.copper"
+            ></div>
+            <div
+              class="icon-text"
+            >{{ notification.sign }}{{ coins(notification.cpVal) }}</div>
           </div>
         </div>
         <div
@@ -227,9 +257,11 @@
 <script>
 import health from '@/assets/svg/health.svg?raw';
 import gold from '@/assets/svg/gold.svg?raw';
+import copper from '@/assets/svg/copper.svg?raw';
 import star from '@/assets/svg/star.svg?raw';
 import mana from '@/assets/svg/mana.svg?raw';
 import sword from '@/assets/svg/sword.svg?raw';
+import { round } from '@/libs/notifications';
 import CloseIcon from '../shared/closeIcon';
 import Sprite from '@/components/ui/sprite';
 
@@ -244,6 +276,7 @@ export default {
       icons: Object.freeze({
         health,
         gold,
+        copper,
         star,
         mana,
         sword,
@@ -260,6 +293,7 @@ export default {
       if (this.notification.type === 'mp') localeKey += 'Mana';
       if (this.notification.type === 'xp') localeKey += 'Experience';
       if (this.notification.type === 'gp') localeKey += 'Gold';
+      if (this.notification.type === 'cp') localeKey += 'Copper';
       if (this.notification.type === 'streak') localeKey = 'streakCoins';
       if (this.notification.type === 'damage') localeKey = 'bossDamage';
       return this.$t(localeKey);
@@ -280,6 +314,9 @@ export default {
     }
   },
   methods: {
+    coins (money) {
+      return round(money, 2);
+    },
     handleOnClick () {
       if (typeof this.notification.onClick === 'function') {
         this.notification.onClick();

@@ -423,6 +423,7 @@ import svgClose from '@/assets/svg/close.svg?raw';
 import svgExperience from '@/assets/svg/experience.svg?raw';
 import svgGem from '@/assets/svg/gem.svg?raw';
 import svgGold from '@/assets/svg/gold.svg?raw';
+import svgCopper from '@/assets/svg/copper.svg?raw';
 import svgHourglasses from '@/assets/svg/hourglass.svg?raw';
 import svgPositive from '@/assets/svg/positive.svg?raw';
 import svgNegative from '@/assets/svg/negative.svg?raw';
@@ -471,6 +472,7 @@ export default {
         experience: svgExperience,
         gems: svgGem,
         gold: svgGold,
+        copper: svgCopper,
         hourglasses: svgHourglasses,
         positive: svgPositive,
         negative: svgNegative,
@@ -498,6 +500,7 @@ export default {
     },
     currencyIcon () {
       if (this.priceType === 'gold') return this.icons.gold;
+      if (this.priceType === 'copper') return this.icons.copper;
       if (this.priceType === 'hourglasses') return this.icons.hourglasses;
       return this.icons.gems;
     },

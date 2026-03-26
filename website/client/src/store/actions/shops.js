@@ -73,7 +73,7 @@ async function buyArmoire (store, params) {
       store.state.user.data.items.food[item.dropKey] += 1;
     }
 
-    store.state.user.data.stats.gp -= armoire.value;
+    store.state.user.data.stats.cp -= armoire.value;
 
     // @TODO: We might need to abstract notifications to library rather than mixin
     const notificationOptions = isExperience
@@ -178,7 +178,7 @@ export async function genericPurchase (store, params) {
         },
       });
     default:
-      if (params.pinType === 'quests' && params.currency === 'gold') {
+      if (params.pinType === 'quests' && (params.currency === 'gold' || params.currency === 'copper')) {
         return buyQuestItem(store, params);
       } if (params.currency === 'hourglasses') {
         return purchaseHourglassItem(store, params);

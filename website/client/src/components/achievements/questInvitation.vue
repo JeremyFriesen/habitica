@@ -50,8 +50,9 @@
         <tr ng-if="quest.drop.exp > 0">
           <td>{{ quest.drop.exp }}&nbsp;{{ $t('experience') }}</td>
         </tr>
+        <!-- upstream field name: drop.gp; currency is now CP -->
         <tr ng-if="quest.drop.gp > 0">
-          <td>{{ quest.drop.gp }}&nbsp;{{ $t('gold') }}</td>
+          <td>{{ quest.drop.gp }}&nbsp;{{ $t('copper') }}</td>
         </tr>
         <tr ng-if="quest.drop.unlock()">
           <td>{{ quest.drop.unlock() }}</td>

@@ -174,7 +174,7 @@ spells.rogue = {
     notes: t('spellRoguePickPocketNotes'),
     cast (user, target) {
       const bonus = calculateBonus(target.value, statsComputed(user).per);
-      user.stats.gp += diminishingReturns(bonus, 25, 75);
+      user.stats.cp += diminishingReturns(bonus, 25, 75);
     },
   },
   backStab: { // Backstab
@@ -187,7 +187,7 @@ spells.rogue = {
       const _crit = crit.crit(user, 'str', 0.3);
       const bonus = calculateBonus(target.value, statsComputed(user).str, _crit);
       user.stats.exp += diminishingReturns(bonus, 75, 50);
-      user.stats.gp += diminishingReturns(bonus, 18, 75);
+      user.stats.cp += diminishingReturns(bonus, 18, 75);
       updateStats(user, user.stats, req);
     },
   },
@@ -301,7 +301,7 @@ spells.special = {
     notes: t('spellSpecialSaltNotes'),
     cast (user) {
       user.stats.buffs.snowball = false;
-      user.stats.gp -= 5;
+      user.stats.cp -= 5;
       setDebuffPotionItems(user);
     },
   },
@@ -335,7 +335,7 @@ spells.special = {
     notes: t('spellSpecialOpaquePotionNotes'),
     cast (user) {
       user.stats.buffs.spookySparkles = false;
-      user.stats.gp -= 5;
+      user.stats.cp -= 5;
       setDebuffPotionItems(user);
     },
   },
@@ -369,7 +369,7 @@ spells.special = {
     notes: t('spellSpecialPetalFreePotionNotes'),
     cast (user) {
       user.stats.buffs.shinySeed = false;
-      user.stats.gp -= 5;
+      user.stats.cp -= 5;
       setDebuffPotionItems(user);
     },
   },
@@ -403,7 +403,7 @@ spells.special = {
     notes: t('spellSpecialSandNotes'),
     cast (user) {
       user.stats.buffs.seafoam = false;
-      user.stats.gp -= 5;
+      user.stats.cp -= 5;
       setDebuffPotionItems(user);
     },
   },
@@ -442,7 +442,7 @@ spells.special = {
       }
       target.flags.cardReceived = true;
 
-      user.stats.gp -= 10;
+      user.stats.cp -= 10;
     },
   },
   valentine: {
@@ -480,7 +480,7 @@ spells.special = {
       }
       target.flags.cardReceived = true;
 
-      user.stats.gp -= 10;
+      user.stats.cp -= 10;
     },
   },
   greeting: {
@@ -517,7 +517,7 @@ spells.special = {
       }
       target.flags.cardReceived = true;
 
-      user.stats.gp -= 10;
+      user.stats.cp -= 10;
     },
   },
   thankyou: {
@@ -554,7 +554,7 @@ spells.special = {
       }
       target.flags.cardReceived = true;
 
-      user.stats.gp -= 10;
+      user.stats.cp -= 10;
     },
   },
   birthday: {
@@ -591,7 +591,7 @@ spells.special = {
       }
       target.flags.cardReceived = true;
 
-      user.stats.gp -= 10;
+      user.stats.cp -= 10;
     },
   },
   congrats: {
@@ -628,7 +628,7 @@ spells.special = {
       }
       target.flags.cardReceived = true;
 
-      user.stats.gp -= 10;
+      user.stats.cp -= 10;
     },
   },
   getwell: {
@@ -665,7 +665,7 @@ spells.special = {
       }
       target.flags.cardReceived = true;
 
-      user.stats.gp -= 10;
+      user.stats.cp -= 10;
     },
   },
   goodluck: {
@@ -702,7 +702,7 @@ spells.special = {
       }
       target.flags.cardReceived = true;
 
-      user.stats.gp -= 10;
+      user.stats.cp -= 10;
     },
   },
 };

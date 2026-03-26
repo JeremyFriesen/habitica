@@ -8,6 +8,7 @@ export default {
     ...mapState({
       userHourglasses: 'user.data.purchased.plan.consecutive.trinkets',
       userGold: 'user.data.stats.gp',
+      userCopper: 'user.data.stats.cp',
     }),
   },
   methods: {
@@ -15,6 +16,8 @@ export default {
       switch (currency) { // eslint-disable-line default-case
         case 'gold':
           return this.userGold >= amount;
+        case 'copper':
+          return this.userCopper >= amount;
         case 'gems':
           return this.userGems >= amount;
         case 'hourglasses':

@@ -565,7 +565,7 @@ export default {
       return result;
     },
     isGearLocked (gear) {
-      if (gear.value > this.userStats.gp) {
+      if (gear.value > this.userStats.cp) {
         return true;
       }
 

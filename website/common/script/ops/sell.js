@@ -50,7 +50,7 @@ export default function sell (user, req = {}) {
   user.items[type][key] -= amount;
   if (user.markModified) user.markModified(`items.${type}`);
 
-  user.stats.gp += content[type][key].value * amount;
+  user.stats.cp += content[type][key].value * amount;
 
   return [
     pick(user, splitWhitespace('stats items')),

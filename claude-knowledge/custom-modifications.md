@@ -96,7 +96,48 @@ UI indicators on sale cards:
 
 Set per-task via MongoDB or the task edit form.
 
-## 9. Yesterdaily Modal Suppression
+## 9. Copper Points (CP) — Parallel Currency
+
+**Branch**: `copper-points-addition`
+**Schema**: `website/server/models/user/schema.js` → `stats.cp: { $type: Number, default: 0, min: 0 }`
+**Scoring**: `website/common/script/ops/scoreTask.js` → `_addPoints` — CP increments by the same fixed amount as GP on every non-reward task score
+**updateStats**: `website/common/script/fns/updateStats.js` — applies `stats.cp` back to `user.stats.cp`
+**Icon**: `website/client/src/assets/svg/copper.svg` — same structure as `gold.svg` recolored to bronze/copper (`#CD7F32` fill, `#7A3F10` accent), with the center letter changed from H to C
+
+### Currency split
+
+| What | Currency |
+|---|---|
+| Custom reward tasks (`type: 'reward'`) | GP only (unchanged) |
+| Market gear, Armoire, health potion, gold-value quests | CP (was GP) |
+| Gems, hourglasses, gem-bought items | Unchanged |
+
+### Buy op changes
+
+All four ops that previously extended `AbstractGoldItemOperation` now extend `AbstractCopperItemOperation`:
+- `buyMarketGear.js`, `buyArmoire.js`, `buyHealthPotion.js`, `buyQuestGold.js`
+
+`AbstractCopperItemOperation` is defined in `abstractBuyOperation.js` alongside the existing Gold/Gem/Hourglass classes. It checks and deducts `user.stats.cp`, throws `messageNotEnoughCopper` on insufficient balance.
+
+### Content/shop currency
+
+`website/common/script/libs/getItemInfo.js` — cases `marketGear`, `potion`, `armoire`, and quests with `goldValue` now return `currency: 'copper'`.
+`website/common/script/libs/shops.js` — repurchaseable gear also uses `currency: 'copper'`.
+
+### Frontend
+
+- **Header** (`menu.vue`): Gems → GP → CP → Savings. CP shown with copper icon.
+- **Stats page** (`userMenu/stats.vue`): CP listed below GP.
+- **Shop modals** (`buyModal.vue`, `buyQuestModal.vue`, `balanceInfo.vue`, `itemCost.vue`): copper icon + `copper` CSS class added; `_currencyMixin.js` handles `enoughCurrency('copper', amount)` via `user.stats.cp`.
+- **Floating notifications** (`notifications.vue` + `snackbars/notification.vue`): GP and CP changes are buffered with `$nextTick` and combined into a single `gp_cp` notification showing both icons side-by-side. Separate `cp`-only notifications also supported.
+
+### i18n strings added
+
+- `messages.json`: `messageNotEnoughCopper`
+- `character.json`: `gainedCopper`, `lostCopper`, `notEnoughCopper`
+- `tasks.json`: `copper`
+
+## 10. Yesterdaily Modal Suppression
 
 **File**: `website/client/src/components/notifications.vue`
 

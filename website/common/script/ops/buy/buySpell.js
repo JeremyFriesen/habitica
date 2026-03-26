@@ -7,11 +7,11 @@ import {
   NotFound,
   NotAuthorized,
 } from '../../libs/errors';
-import { AbstractGoldItemOperation } from './abstractBuyOperation';
+import { AbstractCopperItemOperation } from './abstractBuyOperation';
 import { errorMessage } from '../../libs/errorMessage';
 import { getScheduleMatchingGroup } from '../../content/constants/schedule';
 
-export class BuySpellOperation extends AbstractGoldItemOperation { // eslint-disable-line import/prefer-default-export, max-len
+export class BuySpellOperation extends AbstractCopperItemOperation { // eslint-disable-line import/prefer-default-export, max-len
   getItemKey () {
     return this.key;
   }
