@@ -12,6 +12,7 @@ import {
 import gcpStackdriverTracer from '../libs/gcpTraceAgent';
 import common from '../../common';
 import { getLanguageFromUser } from '../libs/language';
+import { addWriter } from '../libs/recentWriters';
 
 const ENFORCE_CLIENT_HEADER = nconf.get('ENFORCE_CLIENT_HEADER') === 'true';
 
@@ -112,6 +113,7 @@ export function authWithHeaders (options = {}) {
         res.locals.user = user;
         req.session.userId = user._id;
         stackdriverTraceUserId(user._id);
+        if (['POST', 'PUT', 'DELETE'].includes(req.method)) addWriter(req.headers['x-socket-id']);
         user.auth.timestamps.updated = new Date();
         if (OFFICIAL_PLATFORMS.indexOf(client) === -1
           && (!user.flags.thirdPartyTools || moment().diff(user.flags.thirdPartyTools, 'days') > 0)
@@ -146,6 +148,7 @@ export function authWithSession (req, res, next) {
       res.locals.user = user;
       stackdriverTraceUserId(user._id);
       user.auth.timestamps.updated = new Date();
+      if (['POST', 'PUT', 'DELETE'].includes(req.method)) addWriter(req.headers['x-socket-id']);
       return next();
     })
     .catch(next);

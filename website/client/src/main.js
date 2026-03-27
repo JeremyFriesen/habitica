@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { io } from 'socket.io-client';
 import axios from 'axios';
 import {
   ModalPlugin,
@@ -109,5 +110,25 @@ async function initApp () {
 }
 
 initApp();
+
+if (!window._habiticaSocket) {
+  window._habiticaSocket = io({ transports: ['websocket'] });
+
+  const updateSocketHeader = () => {
+    axios.defaults.headers.common['x-socket-id'] = window._habiticaSocket.id;
+  };
+  window._habiticaSocket.on('connect', updateSocketHeader);
+  window._habiticaSocket.on('reconnect', updateSocketHeader);
+
+  window._habiticaSocket.on('db:change', () => {
+    store.dispatch('user:fetch', { forceLoad: true });
+    store.dispatch('tasks:fetchUserTasks', { forceLoad: true });
+    store.dispatch('snackbars:add', {
+      title: 'Habitica',
+      text: 'Data refreshed.',
+      type: 'info',
+    });
+  });
+}
 
 export default vueInstance;

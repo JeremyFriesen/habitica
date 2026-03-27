@@ -163,6 +163,11 @@ export default defineConfig({
         target: DEV_BASE_URL,
         changeOrigin: true,
       },
+      '/socket.io': {
+        target: DEV_BASE_URL,
+        changeOrigin: true,
+        ws: true,
+      },
     }
   }
 })

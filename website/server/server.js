@@ -15,6 +15,8 @@ import attachMiddlewares from './middlewares/index';
 import connectToMongoDB from './libs/mongoose';
 import './libs/setupPassport';
 import './libs/setupFirebase';
+import { initSocketIO } from './libs/socket';
+import { startChangeStream } from './libs/changeStream';
 
 // Load some schemas & models
 import './models/challenge';
@@ -22,7 +24,9 @@ import './models/group';
 import './models/user';
 import SERVER_STATUS from './libs/serverStatus';
 
-connectToMongoDB();
+connectToMongoDB().then(() => {
+  startChangeStream();
+});
 
 const server = http.createServer();
 const app = express();
@@ -39,6 +43,7 @@ process.on('SIGTERM', async () => {
 app.set('port', nconf.get('PORT'));
 
 attachMiddlewares(app, server);
+initSocketIO(server);
 
 server.on('request', app);
 server.listen(app.get('port'), () => {
