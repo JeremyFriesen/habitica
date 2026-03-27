@@ -154,6 +154,7 @@
             && !enoughCurrency(getPriceClass(), item.value * selectedAmountToBuy)"
           class="btn btn-primary mb-3"
           @click="purchaseGems()"
+          disabled
         >
           DEMO {{ $t('purchaseGems') }}
         </button>

@@ -84,6 +84,7 @@
             && !item.locked"
           class="btn btn-primary mb-3"
           @click="purchaseGems()"
+          disabled
         >
           {{ $t('purchaseGems') }}
         </button>
@@ -541,7 +542,8 @@ export default {
       this.$root.$emit('bv::hide::modal', 'buy-quest-modal');
     },
     purchaseGems () {
-      this.$root.$emit('bv::show::modal', 'buy-gems');
+      // Remove gem purchases
+      // this.$root.$emit('bv::show::modal', 'buy-gems');
     },
   },
 };

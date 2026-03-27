@@ -396,17 +396,17 @@
             ></div>
             <span>{{ userHourglasses }}</span>
           </div>
+          <!-- Remove gem purchases: was @click.prevent="showBuyGemsModal()" -->
           <div
             class="item-with-icon gem"
-            @click.prevent="showBuyGemsModal()"
           >
-            <a
+            <!-- Remove gem purchases: was <a href="#buy-gems"> -->
+            <span
               v-b-tooltip.hover.bottom="$t('gems')"
               class="top-menu-icon svg-icon gem mr-2"
               :aria-label="$t('gems')"
-              href="#buy-gems"
               v-html="icons.gem"
-            ></a>
+            ></span>
             <span>{{ userGems }}</span>
           </div>
           <div class="item-with-icon gold">
@@ -649,7 +649,8 @@ body.modal-open #habitica-menu {
   }
 
   .gem:hover {
-    cursor: pointer;
+    /* Remove gem purchases: was cursor: pointer */
+    cursor: default;
 
     & ::v-deep path:nth-child(1) {
       animation: rotateGemColors 3s linear infinite alternate;
@@ -947,7 +948,8 @@ export default {
       this.$root.$emit('bv::show::modal', 'create-party-modal');
     },
     showBuyGemsModal () {
-      this.$root.$emit('bv::show::modal', 'buy-gems', { alreadyTracked: true });
+      // Remove gem purchases
+      // this.$root.$emit('bv::show::modal', 'buy-gems', { alreadyTracked: true });
     },
     dropdownDesktop (hover) {
       if (this.isDesktop() && hover.target.classList.contains('droppable')) {

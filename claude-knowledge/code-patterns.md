@@ -38,6 +38,24 @@ The following will throw `ReferenceError: X is not defined` on the server:
 - Resolve the value there, then pass it as a parameter to the shared function
 - Guard with `if (typeof window !== 'undefined')` only as a last resort
 
+## Vue Template Comments
+
+HTML comments (`<!-- ... -->`) must be placed **outside** of a tag — never between the opening `<tag` and its closing `>`. Putting a comment inside a tag's attribute list is invalid and will break the template.
+
+```html
+<!-- WRONG — inside the tag -->
+<div
+  class="foo"
+  <!-- some comment -->
+>
+
+<!-- CORRECT — before the tag -->
+<!-- some comment -->
+<div
+  class="foo"
+>
+```
+
 ## Module System
 
 - Server and common: ES6 modules transpiled by Babel (`@babel/register`)

@@ -518,7 +518,8 @@ export default {
       }
     },
     donate () {
-      this.$root.$emit('bv::show::modal', 'buy-gems', { alreadyTracked: true });
+      // Remove gem purchases
+      // this.$root.$emit('bv::show::modal', 'buy-gems', { alreadyTracked: true });
     },
     showBailey () {
       this.$root.$emit('bv::show::modal', 'new-stuff');

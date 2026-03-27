@@ -108,9 +108,11 @@ export default {
       return this.currentEvent && this.currentEvent.event;
     },
     showGemsPromoBanner () {
-      const currEvt = this.currentEvent;
-      if (!currEvt || !currEvt.gemsPromo) return false;
-      return true;
+      // Remove gem purchases
+      // const currEvt = this.currentEvent;
+      // if (!currEvt || !currEvt.gemsPromo) return false;
+      // return true;
+      return false;
     },
     bannerClass () {
       const bannerClass = 'gems-promo-banner';

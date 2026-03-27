@@ -308,7 +308,7 @@ export default function getItemInfo (user, type, item, officialPinnedItems, lang
         text: spellInfo.text(),
         notes: spellInfo.notes(),
         value: spellInfo.value,
-        currency: 'gold',
+        currency: 'copper',
         path: `cardTypes.${item.key}`,
         pinType: 'card',
         target: spellInfo.target,
