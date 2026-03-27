@@ -128,7 +128,6 @@ function _addPoints (user, task, stats, direction, delta, roll = 0) {
   // GP — fixed amounts by priority (fork override of original delta-based formula)
   // GP awards: Trivial: 100, Easy: 200, Medium: 300, Hard: 400
 
-  // perBonus is used by CP below; declared here as it belongs to the GP/CP section
   const perBonus = 1 + statsComputed(user).per * 0.02;
 
   const gpByPriority = {
@@ -166,20 +165,35 @@ function _addPoints (user, task, stats, direction, delta, roll = 0) {
 
   stats.gp += direction === 'down' ? -gpMod : gpMod;
 
-  // CP uses the original Habitica GP formula (above was replaced with fixed amounts for GP)
-  const cpMod = delta * task.priority * _crit * perBonus;
+  // CP — fixed amounts by priority + tiered streak bonus (capped at +4)
+  // Base: Trivial: 1, Easy: 3, Medium: 5, Hard: 7
+  // Streak bonus per task: 3–6d: +1, 7–13d: +2, 14–29d: +3, 30+d: +4
+  const cpByPriority = {
+    '0.1': 1,
+    '1': 3,
+    '1.5': 5,
+    '2': 7,
+  };
 
-  if (task.streak) {
-    const currStreak = direction === 'down' ? task.streak - 1 : task.streak;
-    const streakBonus = currStreak / 100 + 1; // 1-day streak = 1.01, 2-day = 1.02, etc
-    const afterStreak = cpMod * streakBonus;
-    if (currStreak > 0 && cpMod > 0) {
-      user._tmp.streakBonus = afterStreak - cpMod;
-    }
-    stats.cp += afterStreak;
-  } else {
-    stats.cp += cpMod;
+  const cpBase = cpByPriority[task.priority] || 3;
+
+  const currStreak = task.streak
+    ? (direction === 'down' ? task.streak - 1 : task.streak)
+    : 0;
+
+  let streakBonus = 0;
+  if (currStreak >= 30) streakBonus = 4;
+  else if (currStreak >= 14) streakBonus = 3;
+  else if (currStreak >= 7) streakBonus = 2;
+  else if (currStreak >= 3) streakBonus = 1;
+
+  const cpMod = (cpBase + streakBonus) * perBonus * (direction === 'down' ? -1 : 1);
+
+  if (streakBonus > 0 && direction === 'up') {
+    user._tmp.streakBonus = streakBonus;
   }
+
+  stats.cp += cpMod;
 }
 
 function _changeTaskValue (user, task, direction, times, cron) {
