@@ -38,14 +38,3 @@ Use `$inc` rather than `$set` — it adds to an existing count instead of overwr
 
 All of these are simple `$set` or `$inc` operations with no dependent fields to update.
 
----
-
-## Setting isManaged
-
-See [custom-modifications.md](custom-modifications.md) → Mod 11 for full details.
-
-```js
-db.users.updateOne({'auth.local.username': 'Dax'}, {$set: {isManaged: true}})
-```
-
-Always restart the server before setting this field (see [docker.md](docker.md)).
