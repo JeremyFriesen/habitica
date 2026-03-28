@@ -28,4 +28,6 @@ This applies across all knowledge types: project knowledge, claude knowledge, an
 | Mongoose, shared code rules, module system | [code-patterns.md](code-patterns.md) | typeKey, partial loads, browser-only API restrictions |
 | All npm and docker commands | [commands.md](commands.md) | Server, client, test, and docker commands |
 | Bug history and root-cause resolutions | [bugs-and-fixes.md](bugs-and-fixes.md) | Volume mount split, nested schema crash, uncheck GP sign bug |
+| Upstream sync status | [upstream-sync.md](upstream-sync.md) | Which upstream commits are incorporated, skipped, or pending |
+| Admin operations | [admin-ops.md](admin-ops.md) | Granting items, inventory paths, MongoDB admin tasks |
 | Skills, agents, custom commands, tools | [claude-capabilities.md](claude-capabilities.md) | What Claude can do and how to invoke it |
