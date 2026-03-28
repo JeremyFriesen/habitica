@@ -71,6 +71,10 @@
     @media (max-width: 992px) {
       min-width: 160px;
     }
+    @media (max-width: 480px) {
+      min-width: 0;
+      width: calc(100% - 40px);
+    }
   }
 
   .progress-container > .progress > .progress-bar {

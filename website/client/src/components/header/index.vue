@@ -33,6 +33,11 @@
     color: $header-color;
     flex-wrap: nowrap;
     position: relative;
+
+    @media (max-width: 480px) {
+      flex-wrap: wrap;
+      padding-left: 12px;
+    }
   }
 
   .hide-header {

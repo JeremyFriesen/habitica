@@ -384,7 +384,7 @@
             </div>
           </li>
         </b-navbar-nav>
-        <div class="currency-tray form-inline">
+        <div class="currency-tray desktop-only form-inline">
           <div
             v-if="userHourglasses > 0"
             class="item-with-icon"
@@ -456,6 +456,47 @@
         </div>
       </b-collapse>
     </b-navbar>
+    <!-- Currency tray for mobile: always visible, outside the collapse -->
+    <div class="currency-tray-mobile mobile-only form-inline">
+      <div
+        v-if="userHourglasses > 0"
+        class="item-with-icon"
+      >
+        <div
+          class="top-menu-icon svg-icon mr-1"
+          v-html="icons.hourglasses"
+        ></div>
+        <span>{{ userHourglasses }}</span>
+      </div>
+      <div class="item-with-icon gem">
+        <span
+          class="top-menu-icon svg-icon gem mr-2"
+          v-html="icons.gem"
+        ></span>
+        <span>{{ userGems }}</span>
+      </div>
+      <div class="item-with-icon gold">
+        <div
+          class="top-menu-icon svg-icon mr-2"
+          v-html="icons.gold"
+        ></div>
+        <span>{{ Math.floor(user.stats.gp * 100) / 100 }}</span>
+      </div>
+      <div class="item-with-icon copper">
+        <div
+          class="top-menu-icon svg-icon mr-2"
+          v-html="icons.copper"
+        ></div>
+        <span>{{ Math.floor(user.stats.cp * 100) / 100 }}</span>
+      </div>
+      <div class="item-with-icon savings-week">
+        <div
+          class="top-menu-icon svg-icon mr-2 savings-ruby"
+          aria-label="Saved this week"
+        >💎</div>
+        <span>{{ weeklySavings }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -800,6 +841,15 @@ body.modal-open #habitica-menu {
 
     .desktop-only {
       display: none !important;
+    }
+
+    .currency-tray-mobile {
+      justify-content: center;
+      flex-wrap: wrap;
+      min-height: 40px;
+      background: #271b3d;
+      width: 100%;
+      padding: 4px 8px;
     }
 
     .navbar-toggler {
