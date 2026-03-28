@@ -59,7 +59,7 @@ Weekly savings total (GP deposited since last Sunday) is shown inline to the rig
 **Getter**: `website/client/src/store/getters/user.js` → `isUserAdmin`
 **Banner**: `website/client/src/app.vue`
 
-A full-width red banner appears at the top of the app when running in admin mode. Admin detection is device/browser-based (not user-specific). The banner shows the logged-in user's display name.
+A full-width red banner appears at the top of the app when running in admin mode. Admin mode is enabled by setting `localStorage.setItem('admin-override', 'true')` in the browser console. Absent or non-`'true'` value means admin mode is off. The banner shows the logged-in user's display name.
 
 ## 6. Habit Button Hiding
 
