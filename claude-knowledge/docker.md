@@ -36,6 +36,16 @@ Mounts the entire repo (with node_modules overrides to keep container deps):
 
 > `website/client/dist/` is live-mounted so production builds propagate to `:3000` immediately without a container restart.
 
+## Picking Up Server Changes
+
+The server container runs `node --watch`, which should auto-restart when source files change via the volume mount. In practice it can miss changes — if server-side edits (models, controllers, middleware) don't seem to take effect, restart manually:
+
+```sh
+docker compose restart server
+```
+
+This is required any time you change Mongoose schema files, since the schema is loaded once at startup. If you set a new schema field in MongoDB *before* restarting the server, `strict: true` may strip it on the next `user.save()` — always restart first, then set the field.
+
 ## Rebuild Commands
 
 ```sh

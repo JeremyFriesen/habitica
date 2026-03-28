@@ -131,7 +131,7 @@
 <script>
 import axios from 'axios';
 
-import { mapState, mapGetters } from '@/libs/store';
+import { mapState } from '@/libs/store';
 import snackbars from '@/components/snackbars/notifications';
 import { LOCALSTORAGE_AUTH_KEY } from '@/libs/auth';
 
@@ -158,9 +158,10 @@ export default {
   computed: {
     ...mapState(['isUserLoggedIn', 'isUserLoaded', 'notificationsRemoved']),
     ...mapState({ user: 'user.data' }),
-    ...mapGetters({
-      isUserAdmin: 'user:isUserAdmin',
-    }),
+    isUserAdmin () {
+      return this.user?.isManaged === true
+        && localStorage.getItem('admin-override') === 'true';
+    },
     isStaticPage () {
       return this.$route.meta.requiresLogin === false;
     },

@@ -227,6 +227,9 @@ export const UserSchema = new Schema({
     accessControl: Boolean, // Can manage IP and client blockers
     coupons: Boolean, // Can generate and request coupons
   },
+
+  // When true, task editing is locked unless localStorage 'admin-override' === 'true'
+  isManaged: { $type: Boolean },
   balance: { $type: Number, default: 0 },
 
   purchased: {

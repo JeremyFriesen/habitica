@@ -47,8 +47,10 @@
         ref="quickAdd"
         v-model="quickAddText"
         class="quick-add"
+        :class="{'managed-disabled': isManagedRestricted}"
         :rows="quickAddRows"
         :placeholder="quickAddPlaceholder"
+        :disabled="isManagedRestricted || undefined"
         @keypress.enter="quickAdd"
         @focus="quickAddFocused = true"
         @blur="quickAddFocused = false"
@@ -230,6 +232,12 @@
     &::placeholder {
       font-weight: bold;
     }
+  }
+
+  .quick-add.managed-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   .quick-add-tip {
@@ -443,6 +451,7 @@ export default {
       getUnfilteredTaskList: 'tasks:getUnfilteredTaskList',
       getUserPreferences: 'user:preferences',
       getUserBuffs: 'user:buffs',
+      isManagedRestricted: 'user:isManagedRestricted',
     }),
     taskList () {
       // @TODO: This should not default to user's tasks. It should require that you pass options in

@@ -198,10 +198,10 @@
           <div
             id="create-task-btn"
             class="btn btn-primary create-btn d-flex align-items-center"
-            :class="{open: openCreateBtn}"
-            tabindex="0"
-            @click.stop.prevent="openCreateBtn = !openCreateBtn"
-            @keypress.enter="openCreateBtn = !openCreateBtn"
+            :class="{open: openCreateBtn, 'managed-disabled': isManagedRestricted}"
+            :tabindex="isManagedRestricted ? -1 : 0"
+            @click.stop.prevent="!isManagedRestricted && (openCreateBtn = !openCreateBtn)"
+            @keypress.enter="!isManagedRestricted && (openCreateBtn = !openCreateBtn)"
           >
             <div
               class="svg-icon icon-10 color"
@@ -382,6 +382,12 @@
     top: 1px;
   }
 
+  .managed-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
   .drag {
     cursor: grab;
     margin: auto 0;
@@ -429,7 +435,7 @@ import todoIcon from '@/assets/svg/todo.svg?raw';
 import rewardIcon from '@/assets/svg/reward.svg?raw';
 import dragIcon from '@/assets/svg/drag_indicator.svg?raw';
 
-import { mapState, mapActions } from '@/libs/store';
+import { mapState, mapActions, mapGetters } from '@/libs/store';
 import brokenTaskModal from './brokenTaskModal';
 import critRollModal from './critRollModal';
 import savingsAmountModal from './savingsAmountModal';
@@ -485,6 +491,9 @@ export default {
   },
   computed: {
     ...mapState({ user: 'user.data' }),
+    ...mapGetters({
+      isManagedRestricted: 'user:isManagedRestricted',
+    }),
     activeTagText () {
       if (this.activeTagIndex === -1) {
         return this.newTag || '';

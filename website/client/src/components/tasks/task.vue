@@ -104,8 +104,8 @@
         >
           <div
             class="task-clickable-area pt-1 pl-75 pb-0"
-            :class="{ 'cursor-auto': !teamManagerAccess }"
-            tabindex="0"
+            :class="{ 'cursor-auto': !teamManagerAccess || isManagedRestricted }"
+            :tabindex="isManagedRestricted ? -1 : 0"
             @click="edit($event, task)"
             @keypress.enter="edit($event, task)"
           >
@@ -116,7 +116,7 @@
                 :class="{ 'has-notes': task.notes }"
               ></h3>
               <menu-dropdown
-                v-if="!isRunningYesterdailies && showOptions"
+                v-if="!isManagedRestricted && !isRunningYesterdailies && showOptions"
                 ref="taskDropdown"
                 v-b-tooltip.hover.top="$t('options')"
                 tabindex="0"
@@ -1071,6 +1071,7 @@ export default {
       getTaskClasses: 'tasks:getTaskClasses',
       canDelete: 'tasks:canDelete',
       canEdit: 'tasks:canEdit',
+      isManagedRestricted: 'user:isManagedRestricted',
     }),
     priorityStars () {
       const map = { 0.1: 1, 1: 2, 1.5: 3, 2: 4 };
@@ -1245,6 +1246,7 @@ export default {
       return moment(this.task.date).format(this.user.preferences.dateFormat.toUpperCase());
     },
     edit (e, task) {
+      if (this.isManagedRestricted) return;
       if (this.isRunningYesterdailies) return;
       const target = e.target || e.srcElement;
 
