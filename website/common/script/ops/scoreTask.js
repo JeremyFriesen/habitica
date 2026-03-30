@@ -102,17 +102,17 @@ function _gainMP (user, val) {
   }
 }
 
-// HP modifier
+// HP/CP modifier — applies only to negative habit clicks, not missed dailies.
 // ===== CONSTITUTION =====
-// Decreases HP/CP loss from bad habits / missed dailies by 0.5% per point.
+// Decreases HP/CP loss from bad habits by 0.5% per point.
 function _subtractPoints (user, task, stats, delta) {
   if (task.group.id && task.type === 'daily') return stats.hp;
   let conBonus = 1 - statsComputed(user).con / 250;
   if (conBonus < 0.1) conBonus = 0.1;
 
-  const hpMod = delta * conBonus * task.priority * 2; // constant 2 multiplier for better results
-  stats.hp += Math.round(hpMod * 10) / 10; // round to 1dp
-  stats.cp += Math.round(hpMod * 10) / 10; // round to 1dp
+  const pMod = delta * conBonus * task.priority * 2; // constant 2 multiplier for better results
+  stats.hp += Math.round(pMod * 10) / 10; // round to 1dp
+  stats.cp += Math.round(pMod * 10) / 10; // round to 1dp
   return stats.hp;
 }
 
@@ -345,7 +345,8 @@ export default function scoreTask (options = {}, req = {}, analytics) {
   } else if (task.type === 'daily') {
     if (cron) {
       delta += _changeTaskValue(user, task, direction, times, cron);
-      _subtractPoints(user, task, stats, delta);
+      // Disabled: missing a daily does not cost HP or CP — only negative habit clicks do.
+      // _subtractPoints(user, task, stats, delta);
       // Chilling frost should not affect challenge or group dailies
       if (!user.stats.buffs.streaks || task.challenge.id || task.group.id) task.streak = 0;
     } else {
