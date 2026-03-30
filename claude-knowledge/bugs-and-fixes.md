@@ -25,6 +25,16 @@ A record of non-obvious bugs found in this fork, their root causes, and resoluti
 
 ---
 
+## Recurring — White screen on :5173 (uBlock Origin blocking a script)
+
+**Symptom**: The Vite dev server at port 5173 loads a completely white screen with no visible errors in the app.
+
+**Root cause**: uBlock Origin blocks a script served from the local dev server address (`192.168.0.100`). The page renders blank because Vue cannot boot.
+
+**Fix**: Add `192.168.0.100` to uBlock Origin's exception list (the "Trusted sites" list in the uBlock Origin dashboard). This only needs to be done once per browser profile.
+
+---
+
 ## 2026-03-24 — Unchecking a daily added GP instead of subtracting
 
 **Symptom**: Unchecking a completed daily awarded GP instead of reversing the award.
