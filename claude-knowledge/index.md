@@ -6,15 +6,18 @@ Every piece of knowledge must exist in exactly one place. When referencing knowl
 
 This applies across all knowledge types: project knowledge, claude knowledge, and your knowledge (memory files).
 
+**Exception**: Behavioral rules ([claude-behavior.md](claude-behavior.md)) are intentionally mirrored in both the repo and memory, because they serve two audiences: the user (repo) and Claude's auto-loaded context (memory). When they conflict, the repo copy wins — flag the conflict immediately and resolve it.
+
 ---
 
 ## Knowledge Categories
 
 | Category | Where it lives | What it covers |
 |---|---|---|
-| **Project knowledge** | `CLAUDE.md` + this folder (all files except claude-capabilities.md) | This Habitica fork — architecture, custom mods, Docker, code patterns, bugs, commands |
+| **Project knowledge** | `CLAUDE.md` + this folder (all files except claude-capabilities.md and claude-behavior.md) | This Habitica fork — architecture, custom mods, Docker, code patterns, bugs, commands |
 | **Claude knowledge** | [`claude-capabilities.md`](claude-capabilities.md) | Claude Code skills, agents, tools, and custom commands |
-| **Your knowledge** | `~/.claude/projects/-home-jeremy-docker-habitica/memory/` | Claude's learned behaviors and meta-rules for this project |
+| **Claude behavior** | [`claude-behavior.md`](claude-behavior.md) + Claude's memory | Behavioral rules — mirrored in both; repo copy takes precedence |
+| **Your knowledge** | Claude's memory | Learned feedback and project-specific corrections |
 
 ---
 
@@ -31,3 +34,4 @@ This applies across all knowledge types: project knowledge, claude knowledge, an
 | Upstream sync status | [upstream-sync.md](upstream-sync.md) | Which upstream commits are incorporated, skipped, or pending |
 | Admin operations | [admin-ops.md](admin-ops.md) | Granting items, inventory paths, MongoDB admin tasks |
 | Skills, agents, custom commands, tools | [claude-capabilities.md](claude-capabilities.md) | What Claude can do and how to invoke it |
+| Behavioral rules and guidelines | [claude-behavior.md](claude-behavior.md) | Never guess, proactive knowledge, Vue comments, commit rules, knowledge precedence |

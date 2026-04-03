@@ -10,7 +10,7 @@ docker compose up -d server mongo       # API + DB only, no hot-reload client
 
 docker compose build server             # Rebuild server image (after package/Dockerfile changes)
 docker compose up -d server             # Restart server after rebuild
-docker compose exec server sh -c "cd website/client && npm run build"  # Build production client bundle
+cd website/client && npm run build      # Build production client bundle (run on host — server container has stale source)
 ```
 
 ## Server

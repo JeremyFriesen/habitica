@@ -35,6 +35,14 @@ A record of non-obvious bugs found in this fork, their root causes, and resoluti
 
 ---
 
+## Recurring — mongosh history drops some commands silently
+
+**Symptom**: Some commands entered in mongosh are not saved to history and cannot be recalled with arrow keys in the next session.
+
+**Known behavior**: The exact rules for what gets saved vs. dropped are not fully understood. Do not guess.
+
+---
+
 ## 2026-03-24 — Unchecking a daily added GP instead of subtracting
 
 **Symptom**: Unchecking a completed daily awarded GP instead of reversing the award.

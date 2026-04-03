@@ -137,7 +137,7 @@ All four ops that previously extended `AbstractGoldItemOperation` now extend `Ab
 - `character.json`: `gainedCopper`, `lostCopper`, `notEnoughCopper`
 - `tasks.json`: `copper`
 
-## 11. Managed User Mode
+## 10. Managed User Mode
 
 **Schema**: `website/server/models/user/schema.js` → `isManaged: Boolean`
 **Getters**: `website/client/src/store/getters/user.js` → `isUserManaged`, `isUserAdmin`, `isManagedRestricted`
@@ -168,7 +168,7 @@ An optional `isManaged` flag on the user document. Set directly in MongoDB — t
 - `app.vue` computes `isUserAdmin` as a local computed (reads `this.user?.isManaged`) rather than mapping the store getter, because `app.vue` renders before user data loads and localStorage reads are not reactive — the store getter would evaluate once to `false` and never update.
 - If `isManaged: true` is set in MongoDB while the server is running an old schema (without the field), any `user.save()` call will strip it (`strict: true`). Always restart the server after adding the schema field before setting the flag in MongoDB.
 
-## 10. Yesterdaily Modal Suppression
+## 11. Yesterdaily Modal Suppression
 
 **File**: `website/client/src/components/notifications.vue`
 
